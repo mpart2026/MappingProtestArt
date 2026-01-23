@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.3">
+<title>Mapping Protest Art</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
+<link rel="modulepreload" href="../_observablehq/client.eac1cff3.js">
+<link rel="modulepreload" href="../_observablehq/runtime.e080113b.js">
+<link rel="modulepreload" href="../_observablehq/stdlib.73a8ec5a.js">
+<link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/9cffc2bd.js">
+
+    <link rel="icon" href="../_file/observable.1af93621.png" type="image/png" sizes="32x32">
+    <style>
+      #observablehq-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: static !important;
+        top: 0;
+        background: var(--theme-background, white);
+        z-index: 1000;
+        padding-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .observablehq {
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      
+      #observablehq-center {
+        padding-right: 1rem !important;
+      }
+
+      #observablehq-main {
+        padding-top: 2rem;
+      }
+      
+      .header-top {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0;
+      }
+      
+      .header-logo {
+        height: 48px;
+        width: auto;
+        cursor: pointer;
+      }
+      
+      .header-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      
+      .header-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s;
+      }
+      
+      .header-link:hover {
+        opacity: 0.8;
+      }
+      
+      #observablehq-header nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        border-top: 1px solid var(--theme-foreground-faint, #ccc);
+        padding-top: 1rem;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-toggle {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+      }
+      
+      .dropdown-toggle:hover {
+        text-decoration: underline;
+      }
+      
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--theme-background, white);
+        border: 1px solid var(--theme-foreground-faint, #ccc);
+        border-radius: 4px;
+        min-width: 160px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 1000;
+        margin-top: 0.25rem;
+      }
+      
+      .dropdown-menu.show {
+        display: block;
+      }
+      
+      .dropdown-menu a {
+        display: block;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: inherit;
+        white-space: nowrap;
+      }
+      
+      .dropdown-menu a:hover {
+        background: var(--theme-foreground-faintest, #f5f5f5);
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+          const toggle = dropdown.querySelector('.dropdown-toggle');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          
+          toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+              if (m !== menu) m.classList.remove('show');
+            });
+            // Toggle this dropdown
+            menu.classList.toggle('show');
+          });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+          document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+          });
+        });
+      });
+    </script>
+  
+<script type="module">
+
+import {define} from "../_observablehq/client.eac1cff3.js";
+import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
+
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.eb1705af.csv","lastModified":1769196128746,"size":3124});
+
+define({id: "02fdba61", inputs: ["FileAttachment","display"], outputs: ["data","container","header","divider","activeTheme","sortBy","themes","controlsContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","sortSection","sortLabel","sortButtonsContainer","sortOptions","sortButtons","itemsContainer","footer","updateTagStyles","updateSortStyles","sortData","updateDisplay"], body: async (FileAttachment,display) => {
+// Load and parse CSV file using FileAttachment
+const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
+
+// Create container for the collection
+const container = display(document.createElement("div"));
+container.style.maxWidth = "900px";
+container.style.margin = "0 auto";
+container.style.padding = "2rem";
+container.style.fontFamily = "system-ui, -apple-system, sans-serif";
+
+// Add a header
+const header = document.createElement("h1");
+header.textContent = "Artwork Collection";
+header.style.marginBottom = "1rem";
+header.style.paddingBottom = "1rem";
+container.appendChild(header);
+
+// Add a divider line that matches the width of the controls below
+const divider = document.createElement("div");
+divider.style.borderBottom = "2px solid #333";
+divider.style.marginBottom = "1rem";
+divider.style.marginLeft = "-1rem";  // Compensate for container padding
+divider.style.marginRight = "-1rem"; // Compensate for container padding
+container.appendChild(divider);
+
+// State variables
+let activeTheme = null;
+let sortBy = "title";
+
+// Extract unique themes
+const themes = [...new Set(data.map(row => row.Theme).filter(Boolean))].sort();
+
+// Create controls container
+const controlsContainer = document.createElement("div");
+controlsContainer.style.marginBottom = "2rem";
+
+// Create theme filter section
+const filterSection = document.createElement("div");
+filterSection.style.marginBottom = "1rem";
+filterSection.style.padding = "1rem";
+filterSection.style.backgroundColor = "#f5f5f5";
+filterSection.style.borderRadius = "8px";
+
+const filterLabel = document.createElement("div");
+filterLabel.textContent = "Browse by Theme:";
+filterLabel.style.fontWeight = "bold";
+filterLabel.style.marginBottom = "0.75rem";
+filterSection.appendChild(filterLabel);
+
+const tagContainer = document.createElement("div");
+tagContainer.style.display = "flex";
+tagContainer.style.flexWrap = "wrap";
+tagContainer.style.gap = "0.5rem";
+
+// Create "All" tag
+const allTag = document.createElement("button");
+allTag.textContent = "All";
+allTag.style.padding = "0.5rem 1rem";
+allTag.style.border = "1px solid #0066cc";
+allTag.style.borderRadius = "20px";
+allTag.style.cursor = "pointer";
+allTag.style.fontSize = "0.9rem";
+allTag.style.transition = "all 0.2s";
+allTag.style.backgroundColor = "#0066cc";
+allTag.style.color = "white";
+
+allTag.addEventListener("click", () => {
+  activeTheme = null;
+  updateDisplay();
+  updateTagStyles();
+});
+
+tagContainer.appendChild(allTag);
+
+// Create theme tags
+const themeTags = {};
+themes.forEach(theme => {
+  const tag = document.createElement("button");
+  tag.textContent = theme;
+  tag.style.padding = "0.5rem 1rem";
+  tag.style.border = "1px solid #0066cc";
+  tag.style.borderRadius = "20px";
+  tag.style.backgroundColor = "white";
+  tag.style.color = "#0066cc";
+  tag.style.cursor = "pointer";
+  tag.style.fontSize = "0.9rem";
+  tag.style.transition = "all 0.2s";
+  
+  tag.addEventListener("mouseover", () => {
+    if (activeTheme !== theme) {
+      tag.style.backgroundColor = "#e6f2ff";
+    }
+  });
+  
+  tag.addEventListener("mouseout", () => {
+    if (activeTheme !== theme) {
+      tag.style.backgroundColor = "white";
+    }
+  });
+  
+  tag.addEventListener("click", () => {
+    activeTheme = theme;
+    updateDisplay();
+    updateTagStyles();
+  });
+  
+  themeTags[theme] = tag;
+  tagContainer.appendChild(tag);
+});
+
+filterSection.appendChild(tagContainer);
+controlsContainer.appendChild(filterSection);
+
+// Create sort section
+const sortSection = document.createElement("div");
+sortSection.style.padding = "1rem";
+sortSection.style.backgroundColor = "#f5f5f5";
+sortSection.style.borderRadius = "8px";
+
+const sortLabel = document.createElement("div");
+sortLabel.textContent = "Sort by:";
+sortLabel.style.fontWeight = "bold";
+sortLabel.style.marginBottom = "0.75rem";
+sortSection.appendChild(sortLabel);
+
+const sortButtonsContainer = document.createElement("div");
+sortButtonsContainer.style.display = "flex";
+sortButtonsContainer.style.gap = "0.5rem";
+sortButtonsContainer.style.flexWrap = "wrap";
+
+const sortOptions = [
+  { value: "title", label: "Title" },
+  { value: "creator", label: "Creator" },
+  { value: "year", label: "Year" }
+];
+
+const sortButtons = {};
+
+sortOptions.forEach(option => {
+  const button = document.createElement("button");
+  button.textContent = option.label;
+  button.style.padding = "0.5rem 1rem";
+  button.style.border = "1px solid #666";
+  button.style.borderRadius = "20px";
+  button.style.cursor = "pointer";
+  button.style.fontSize = "0.9rem";
+  button.style.transition = "all 0.2s";
+  button.style.backgroundColor = option.value === "title" ? "#666" : "white";
+  button.style.color = option.value === "title" ? "white" : "#666";
+  
+  button.addEventListener("mouseover", () => {
+    if (sortBy !== option.value) {
+      button.style.backgroundColor = "#e6e6e6";
+    }
+  });
+  
+  button.addEventListener("mouseout", () => {
+    if (sortBy !== option.value) {
+      button.style.backgroundColor = "white";
+    }
+  });
+  
+  button.addEventListener("click", () => {
+    sortBy = option.value;
+    updateDisplay();
+    updateSortStyles();
+  });
+  
+  sortButtons[option.value] = button;
+  sortButtonsContainer.appendChild(button);
+});
+
+sortSection.appendChild(sortButtonsContainer);
+controlsContainer.appendChild(sortSection);
+container.appendChild(controlsContainer);
+
+// Create items container
+const itemsContainer = document.createElement("div");
+container.appendChild(itemsContainer);
+
+// Create footer for count
+const footer = document.createElement("div");
+footer.style.marginTop = "2rem";
+footer.style.textAlign = "center";
+footer.style.color = "#666";
+footer.style.fontStyle = "italic";
+container.appendChild(footer);
+
+function updateTagStyles() {
+  allTag.style.backgroundColor = activeTheme === null ? "#0066cc" : "white";
+  allTag.style.color = activeTheme === null ? "white" : "#0066cc";
+  
+  Object.keys(themeTags).forEach(theme => {
+    const tag = themeTags[theme];
+    tag.style.backgroundColor = activeTheme === theme ? "#0066cc" : "white";
+    tag.style.color = activeTheme === theme ? "white" : "#0066cc";
+  });
+}
+
+function updateSortStyles() {
+  Object.keys(sortButtons).forEach(value => {
+    const button = sortButtons[value];
+    button.style.backgroundColor = sortBy === value ? "#666" : "white";
+    button.style.color = sortBy === value ? "white" : "#666";
+  });
+}
+
+function sortData(dataToSort) {
+  const sorted = [...dataToSort];
+  
+  if (sortBy === "title") {
+    sorted.sort((a, b) => {
+      const titleA = (a.Title || 'Untitled').toLowerCase();
+      const titleB = (b.Title || 'Untitled').toLowerCase();
+      return titleA.localeCompare(titleB);
+    });
+  } else if (sortBy === "creator") {
+    sorted.sort((a, b) => {
+      const creatorA = (a.Creator || '').toLowerCase();
+      const creatorB = (b.Creator || '').toLowerCase();
+      return creatorA.localeCompare(creatorB);
+    });
+  } else if (sortBy === "year") {
+    sorted.sort((a, b) => {
+      const yearA = parseInt(a['Creation Year']) || 0;
+      const yearB = parseInt(b['Creation Year']) || 0;
+      return yearB - yearA;
+    });
+  }
+  
+  return sorted;
+}
+
+function updateDisplay() {
+  // Clear items
+  itemsContainer.innerHTML = "";
+  
+  // Filter data
+  const filteredData = activeTheme === null 
+    ? data 
+    : data.filter(row => row.Theme === activeTheme);
+  
+  // Sort data
+  const sortedData = sortData(filteredData);
+  
+  // Create items for each row
+  sortedData.forEach(row => {
+    // Create item container
+    const item = document.createElement("div");
+    item.style.marginBottom = "2.5rem";
+    item.style.paddingBottom = "2rem";
+    item.style.borderBottom = "1px solid #ddd";
+    
+    // Title with link
+    const title = document.createElement("h2");
+    title.style.marginTop = "0";
+    title.style.marginBottom = "0.5rem";
+    
+    if (row.InfoURL) {
+      const link = document.createElement("a");
+      link.href = row.InfoURL;
+      link.target = "_blank";
+      link.textContent = row.Title || 'Untitled';
+      link.style.color = "#0066cc";
+      link.style.textDecoration = "none";
+      link.addEventListener("mouseover", () => link.style.textDecoration = "underline");
+      link.addEventListener("mouseout", () => link.style.textDecoration = "none");
+      title.appendChild(link);
+    } else {
+      title.textContent = row.Title || 'Untitled';
+    }
+    
+    item.appendChild(title);
+    
+    // Metadata line
+    const metadata = [];
+    if (row.Creator) metadata.push(`<strong>Creator:</strong> ${row.Creator}`);
+    if (row['Creation Year']) metadata.push(`<strong>Year:</strong> ${row['Creation Year']}`);
+    if (row.Material) metadata.push(`<strong>Material:</strong> ${row.Material}`);
+    if (row.Medium) metadata.push(`<strong>Medium:</strong> ${row.Medium}`);
+    
+    if (metadata.length > 0) {
+      const metaDiv = document.createElement("div");
+      metaDiv.innerHTML = metadata.join(" • ");
+      metaDiv.style.color = "#666";
+      metaDiv.style.fontSize = "0.9rem";
+      metaDiv.style.marginBottom = "0.75rem";
+      item.appendChild(metaDiv);
+    }
+    
+    // Description
+    if (row.Description) {
+      const desc = document.createElement("p");
+      desc.textContent = row.Description;
+      desc.style.marginTop = "0.75rem";
+      desc.style.marginBottom = "0.5rem";
+      desc.style.lineHeight = "1.6";
+      item.appendChild(desc);
+    }
+    
+    // Additional details
+    const details = [];
+    if (row.Theme) details.push(`<strong>Theme:</strong> ${row.Theme}`);
+    if (row.Location) details.push(`<strong>Location:</strong> ${row.Location}`);
+    if (row['Visual Tags']) details.push(`<em>Tags: ${row['Visual Tags']}</em>`);
+    
+    if (details.length > 0) {
+      const detailsDiv = document.createElement("div");
+      detailsDiv.innerHTML = details.join(" • ");
+      detailsDiv.style.fontSize = "0.85rem";
+      detailsDiv.style.color = "#888";
+      detailsDiv.style.marginTop = "0.5rem";
+      item.appendChild(detailsDiv);
+    }
+    
+    itemsContainer.appendChild(item);
+  });
+  
+  // Update footer count
+  footer.textContent = `Showing ${sortedData.length} of ${data.length} items`;
+}
+
+// Initial display
+updateDisplay();
+return {data,container,header,divider,activeTheme,sortBy,themes,controlsContainer,filterSection,filterLabel,tagContainer,allTag,themeTags,sortSection,sortLabel,sortButtonsContainer,sortOptions,sortButtons,itemsContainer,footer,updateTagStyles,updateSortStyles,sortData,updateDisplay};
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<header id="observablehq-header">
+
+    <div class="header-top">
+      <a href="../home/" class="header-link">
+        <img src="../_file/mpalogo.32cc778c.png" alt="Logo" class="header-logo">
+        <h1 class="header-title">Mapping Protest Art</h1>
+      </a>
+    </div>
+    <nav>
+      
+      <a href="../home/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
+
+      <a href="../map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+
+      <a href="./" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
+           
+      <a href="../visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
+
+      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+
+    </nav>
+  
+</header>
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:02fdba61:--></div>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T14:28:33">Jan 23, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>

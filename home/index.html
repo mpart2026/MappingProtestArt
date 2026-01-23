@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.3">
+<title>Home | Mapping Protest Art</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
+<link rel="modulepreload" href="../_observablehq/client.eac1cff3.js">
+<link rel="modulepreload" href="../_observablehq/runtime.e080113b.js">
+<link rel="modulepreload" href="../_observablehq/stdlib.73a8ec5a.js">
+<link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/9cffc2bd.js">
+
+    <link rel="icon" href="../_file/observable.1af93621.png" type="image/png" sizes="32x32">
+    <style>
+      #observablehq-header {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: static !important;
+        top: 0;
+        background: var(--theme-background, white);
+        z-index: 1000;
+        padding-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .observablehq {
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      
+      #observablehq-center {
+        padding-right: 1rem !important;
+      }
+
+      #observablehq-main {
+        padding-top: 2rem;
+      }
+      
+      .header-top {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem 0;
+      }
+      
+      .header-logo {
+        height: 48px;
+        width: auto;
+        cursor: pointer;
+      }
+      
+      .header-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      
+      .header-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s;
+      }
+      
+      .header-link:hover {
+        opacity: 0.8;
+      }
+      
+      #observablehq-header nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        border-top: 1px solid var(--theme-foreground-faint, #ccc);
+        padding-top: 1rem;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-toggle {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+      }
+      
+      .dropdown-toggle:hover {
+        text-decoration: underline;
+      }
+      
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--theme-background, white);
+        border: 1px solid var(--theme-foreground-faint, #ccc);
+        border-radius: 4px;
+        min-width: 160px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        z-index: 1000;
+        margin-top: 0.25rem;
+      }
+      
+      .dropdown-menu.show {
+        display: block;
+      }
+      
+      .dropdown-menu a {
+        display: block;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: inherit;
+        white-space: nowrap;
+      }
+      
+      .dropdown-menu a:hover {
+        background: var(--theme-foreground-faintest, #f5f5f5);
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+          const toggle = dropdown.querySelector('.dropdown-toggle');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          
+          toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+              if (m !== menu) m.classList.remove('show');
+            });
+            // Toggle this dropdown
+            menu.classList.toggle('show');
+          });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+          document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+          });
+        });
+      });
+    </script>
+  
+<script type="module">
+
+import {define} from "../_observablehq/client.eac1cff3.js";
+import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
+
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.eb1705af.csv","lastModified":1769196128746,"size":3124});
+
+define({id: "36232bfa", inputs: ["FileAttachment","display"], outputs: ["data","container","header","subtitle","widgetsContainer","totalArtworks","uniqueThemes","uniqueCreators","mapWidget","mapIcon","mapTitle","mapDesc","mapButton","collectionsWidget","collectionsIcon","collectionsTitle","collectionsDesc","collectionsButton","statsSection","statsTitle","statsGrid","stats"], body: async (FileAttachment,display) => {
+// Load data to show statistics
+const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
+
+// Create main container
+const container = display(document.createElement("div"));
+container.style.maxWidth = "1200px";
+container.style.margin = "0 auto";
+container.style.padding = "2rem";
+container.style.fontFamily = "system-ui, -apple-system, sans-serif";
+
+// Add welcome header
+const header = document.createElement("h1");
+header.textContent = "Welcome to the Artwork Collection";
+header.style.marginBottom = "1rem";
+header.style.textAlign = "center";
+header.style.color = "#333";
+container.appendChild(header);
+
+// Add subtitle
+const subtitle = document.createElement("p");
+subtitle.textContent = "Explore our collection through the map or browse by themes and categories";
+subtitle.style.textAlign = "center";
+subtitle.style.color = "#666";
+subtitle.style.fontSize = "1.1rem";
+subtitle.style.marginBottom = "3rem";
+container.appendChild(subtitle);
+
+// Create widgets container
+const widgetsContainer = document.createElement("div");
+widgetsContainer.style.display = "grid";
+widgetsContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))";
+widgetsContainer.style.gap = "2rem";
+widgetsContainer.style.marginBottom = "3rem";
+
+// Calculate statistics
+const totalArtworks = data.length;
+const uniqueThemes = [...new Set(data.map(row => row.Theme).filter(Boolean))].length;
+const uniqueCreators = [...new Set(data.map(row => row.Creator).filter(Boolean))].length;
+
+// Widget 1: Map View
+const mapWidget = document.createElement("div");
+mapWidget.style.backgroundColor = "#f8f9fa";
+mapWidget.style.padding = "2rem";
+mapWidget.style.borderRadius = "12px";
+mapWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+mapWidget.style.cursor = "pointer";
+mapWidget.style.transition = "transform 0.2s, box-shadow 0.2s";
+mapWidget.style.border = "2px solid transparent";
+
+mapWidget.addEventListener("mouseover", () => {
+  mapWidget.style.transform = "translateY(-5px)";
+  mapWidget.style.boxShadow = "0 8px 12px rgba(0,0,0,0.15)";
+  mapWidget.style.borderColor = "#0066cc";
+});
+
+mapWidget.addEventListener("mouseout", () => {
+  mapWidget.style.transform = "translateY(0)";
+  mapWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+  mapWidget.style.borderColor = "transparent";
+});
+
+mapWidget.addEventListener("click", () => {
+  window.location.href = "../map/index";
+});
+
+const mapIcon = document.createElement("div");
+mapIcon.innerHTML = "🗺️";
+mapIcon.style.fontSize = "3rem";
+mapIcon.style.marginBottom = "1rem";
+mapWidget.appendChild(mapIcon);
+
+const mapTitle = document.createElement("h2");
+mapTitle.textContent = "Explore Map";
+mapTitle.style.marginTop = "0";
+mapTitle.style.marginBottom = "0.5rem";
+mapTitle.style.color = "#0066cc";
+mapWidget.appendChild(mapTitle);
+
+const mapDesc = document.createElement("p");
+mapDesc.textContent = `View ${totalArtworks} artworks on an interactive map. Filter by theme and explore geographical locations.`;
+mapDesc.style.color = "#666";
+mapDesc.style.lineHeight = "1.6";
+mapWidget.appendChild(mapDesc);
+
+const mapButton = document.createElement("div");
+mapButton.textContent = "View Map →";
+mapButton.style.marginTop = "1rem";
+mapButton.style.color = "#0066cc";
+mapButton.style.fontWeight = "bold";
+mapWidget.appendChild(mapButton);
+
+widgetsContainer.appendChild(mapWidget);
+
+// Widget 2: Collections View
+const collectionsWidget = document.createElement("div");
+collectionsWidget.style.backgroundColor = "#f8f9fa";
+collectionsWidget.style.padding = "2rem";
+collectionsWidget.style.borderRadius = "12px";
+collectionsWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+collectionsWidget.style.cursor = "pointer";
+collectionsWidget.style.transition = "transform 0.2s, box-shadow 0.2s";
+collectionsWidget.style.border = "2px solid transparent";
+
+collectionsWidget.addEventListener("mouseover", () => {
+  collectionsWidget.style.transform = "translateY(-5px)";
+  collectionsWidget.style.boxShadow = "0 8px 12px rgba(0,0,0,0.15)";
+  collectionsWidget.style.borderColor = "#28a745";
+});
+
+collectionsWidget.addEventListener("mouseout", () => {
+  collectionsWidget.style.transform = "translateY(0)";
+  collectionsWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+  collectionsWidget.style.borderColor = "transparent";
+});
+
+collectionsWidget.addEventListener("click", () => {
+  window.location.href = "../collection/index";
+});
+
+const collectionsIcon = document.createElement("div");
+collectionsIcon.innerHTML = "📚";
+collectionsIcon.style.fontSize = "3rem";
+collectionsIcon.style.marginBottom = "1rem";
+collectionsWidget.appendChild(collectionsIcon);
+
+const collectionsTitle = document.createElement("h2");
+collectionsTitle.textContent = "Browse Collections";
+collectionsTitle.style.marginTop = "0";
+collectionsTitle.style.marginBottom = "0.5rem";
+collectionsTitle.style.color = "#28a745";
+collectionsWidget.appendChild(collectionsTitle);
+
+const collectionsDesc = document.createElement("p");
+collectionsDesc.textContent = `Browse ${totalArtworks} artworks organized by theme. Sort by title, creator, or year.`;
+collectionsDesc.style.color = "#666";
+collectionsDesc.style.lineHeight = "1.6";
+collectionsWidget.appendChild(collectionsDesc);
+
+const collectionsButton = document.createElement("div");
+collectionsButton.textContent = "Browse Collections →";
+collectionsButton.style.marginTop = "1rem";
+collectionsButton.style.color = "#28a745";
+collectionsButton.style.fontWeight = "bold";
+collectionsWidget.appendChild(collectionsButton);
+
+widgetsContainer.appendChild(collectionsWidget);
+
+container.appendChild(widgetsContainer);
+
+// Add statistics section
+const statsSection = document.createElement("div");
+statsSection.style.backgroundColor = "#fff";
+statsSection.style.padding = "2rem";
+statsSection.style.borderRadius = "12px";
+statsSection.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+statsSection.style.marginTop = "2rem";
+
+const statsTitle = document.createElement("h2");
+statsTitle.textContent = "Collection Overview";
+statsTitle.style.marginTop = "0";
+statsTitle.style.marginBottom = "1.5rem";
+statsTitle.style.textAlign = "center";
+statsTitle.style.color = "#333";
+statsSection.appendChild(statsTitle);
+
+const statsGrid = document.createElement("div");
+statsGrid.style.display = "grid";
+statsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
+statsGrid.style.gap = "2rem";
+statsGrid.style.textAlign = "center";
+
+const stats = [
+  { label: "Total Artworks", value: totalArtworks, color: "#0066cc" },
+  { label: "Themes", value: uniqueThemes, color: "#28a745" },
+  { label: "Creators", value: uniqueCreators, color: "#dc3545" }
+];
+
+stats.forEach(stat => {
+  const statItem = document.createElement("div");
+  
+  const statValue = document.createElement("div");
+  statValue.textContent = stat.value;
+  statValue.style.fontSize = "2.5rem";
+  statValue.style.fontWeight = "bold";
+  statValue.style.color = stat.color;
+  statValue.style.marginBottom = "0.5rem";
+  statItem.appendChild(statValue);
+  
+  const statLabel = document.createElement("div");
+  statLabel.textContent = stat.label;
+  statLabel.style.color = "#666";
+  statLabel.style.fontSize = "0.9rem";
+  statLabel.style.textTransform = "uppercase";
+  statLabel.style.letterSpacing = "1px";
+  statItem.appendChild(statLabel);
+  
+  statsGrid.appendChild(statItem);
+});
+
+statsSection.appendChild(statsGrid);
+container.appendChild(statsSection);
+return {data,container,header,subtitle,widgetsContainer,totalArtworks,uniqueThemes,uniqueCreators,mapWidget,mapIcon,mapTitle,mapDesc,mapButton,collectionsWidget,collectionsIcon,collectionsTitle,collectionsDesc,collectionsButton,statsSection,statsTitle,statsGrid,stats};
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<header id="observablehq-header">
+
+    <div class="header-top">
+      <a href="./" class="header-link">
+        <img src="../_file/mpalogo.32cc778c.png" alt="Logo" class="header-logo">
+        <h1 class="header-title">Mapping Protest Art</h1>
+      </a>
+    </div>
+    <nav>
+      
+      <a href="./" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
+
+      <a href="../map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+
+      <a href="../collection/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
+           
+      <a href="../visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
+
+      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+
+    </nav>
+  
+</header>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+</nav>
+</aside>
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:36232bfa:--></div>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T14:28:33">Jan 23, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>
