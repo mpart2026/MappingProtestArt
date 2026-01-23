@@ -1,5 +1,7 @@
-# Mapping Protest Art
+---
+title: "Home"
+---
 
-Welcome to the CUNY Interactive Data Visualization course repository for fall 2025. This repository will be updated periodically throughout the semester with labs and data.
+# Welcome to Mapping Protest Art
 
-
+[Navigate to Home](/home/index)
