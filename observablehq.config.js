@@ -175,7 +175,7 @@ export default {
   
 header: `
     <div class="header-top">
-      <a href="home/index" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+      <a href="index" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
         <img src="/mpalogo.png" alt="Logo" class="header-logo">
         <h1 class="header-title">Mapping Protest Art</h1>
       </a>
