@@ -1,7 +1,12 @@
 ---
-title: "Home"
+title: "Mapping Protest Art"
 ---
 
-# Welcome to Mapping Protest Art
+<script>
+  // Redirect to home page
+  window.location.href = './home/index';
+</script>
 
-[Navigate to Home](/home/index)
+# Mapping Protest Art
+
+Redirecting to home page...
