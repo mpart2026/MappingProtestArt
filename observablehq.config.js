@@ -3,17 +3,19 @@ export default {
   // The app's title; used in the sidebar and webpage titles.
   title: "Mapping Protest Art",
   
-  basePath: "/MappingProtestArt",
+  // Base path for GitHub Pages deployment - CHANGED from basePath to base
+  base: "/MappingProtestArt",
+  
   // The pages and sections in the sidebar. If you don't specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
   // lets you organize them into sections and have unlisted pages.
   pages: [
-  { name: "Home", path: "home/index", open: false },
-  { name: "Map", path: "map/index", open: false },
-  { name: "Collection", path: "collection/index", open: false },
-  { name: "Visualizations", path: "visualizations/index", open: false },
-  { name: "Contact", path: "contact/index", open: false }
-],
+    { name: "Home", path: "home/index", open: false },
+    { name: "Map", path: "map/index", open: false },
+    { name: "Collection", path: "collection/index", open: false },
+    { name: "Visualizations", path: "visualizations/index", open: false },
+    { name: "Contact", path: "contact/index", open: false }
+  ],
   
   // Content to add to the head of the page, e.g. for a favicon:
   head: `
@@ -65,7 +67,6 @@ export default {
         font-weight: 600;
         margin: 0;
       }
-      
       
       .header-link {
         display: flex;
@@ -173,24 +174,24 @@ export default {
   // Disable the sidebar and add a custom header with navigation
   sidebar: false,
   
-header: `
+  header: `
     <div class="header-top">
-      <a href="index" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
-        <img src="/mpalogo.png" alt="Logo" class="header-logo">
+      <a href="./home/index" class="header-link">
+        <img src="./mpalogo.png" alt="Logo" class="header-logo">
         <h1 class="header-title">Mapping Protest Art</h1>
       </a>
     </div>
     <nav>
       
-      <a href="home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
+      <a href="./home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="./map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
-      <a href="collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
+      <a href="./collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
-      <a href="visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
+      <a href="./visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+      <a href="./contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
 
     </nav>
   `,
