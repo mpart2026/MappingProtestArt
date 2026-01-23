@@ -83,7 +83,7 @@ export default {
       
       #observablehq-header nav {
         display: flex;
-        gap: 2rem;
+        gap: 7rem;
         align-items: center;
         border-top: 1px solid var(--theme-foreground-faint, #ccc);
         padding-top: 1rem;

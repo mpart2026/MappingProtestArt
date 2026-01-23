@@ -109,7 +109,7 @@ collectionsWidget.style.border = "2px solid transparent";
 collectionsWidget.addEventListener("mouseover", () => {
   collectionsWidget.style.transform = "translateY(-5px)";
   collectionsWidget.style.boxShadow = "0 8px 12px rgba(0,0,0,0.15)";
-  collectionsWidget.style.borderColor = "#28a745";
+  collectionsWidget.style.borderColor = "#0066cc";
 });
 
 collectionsWidget.addEventListener("mouseout", () => {
@@ -132,7 +132,7 @@ const collectionsTitle = document.createElement("h2");
 collectionsTitle.textContent = "Browse Collections";
 collectionsTitle.style.marginTop = "0";
 collectionsTitle.style.marginBottom = "0.5rem";
-collectionsTitle.style.color = "#28a745";
+collectionsTitle.style.color = "#0066cc";
 collectionsWidget.appendChild(collectionsTitle);
 
 const collectionsDesc = document.createElement("p");
@@ -144,7 +144,7 @@ collectionsWidget.appendChild(collectionsDesc);
 const collectionsButton = document.createElement("div");
 collectionsButton.textContent = "Browse Collections →";
 collectionsButton.style.marginTop = "1rem";
-collectionsButton.style.color = "#28a745";
+collectionsButton.style.color = "#0066cc";
 collectionsButton.style.fontWeight = "bold";
 collectionsWidget.appendChild(collectionsButton);
 
