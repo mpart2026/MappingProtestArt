@@ -8,27 +8,12 @@ export default {
   // all pages will be listed in alphabetical order. Listing pages explicitly
   // lets you organize them into sections and have unlisted pages.
   pages: [
-    {
-      name: "Home",
-      open: false,
-    },
-    {
-      name: "Map",
-      open: false,
-    },
-    {
-      name: "Collection",
-      open: false,
-    },
-    {
-      name: "Visualizations",
-      open: false,
-    },
-    {
-      name: "Contact",
-      open: false,
-    }
-  ],
+  { name: "Home", path: "home/index", open: false },
+  { name: "Map", path: "map/index", open: false },
+  { name: "Collection", path: "collection/index", open: false },
+  { name: "Visualizations", path: "visualizations/index", open: false },
+  { name: "Contact", path: "contact/index", open: false }
+],
   
   // Content to add to the head of the page, e.g. for a favicon:
   head: `
