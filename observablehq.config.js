@@ -190,22 +190,22 @@ export default {
   
 header: `
     <div class="header-top">
-      <a href="/home/index" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+      <a href="home/index" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
         <img src="/mpalogo.png" alt="Logo" class="header-logo">
         <h1 class="header-title">Mapping Protest Art</h1>
       </a>
     </div>
     <nav>
       
-      <a href="/home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
+      <a href="home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="/map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
-      <a href="/collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
+      <a href="collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
-      <a href="/visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
+      <a href="visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="/contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+      <a href="contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
 
     </nav>
   `,
