@@ -171,7 +171,7 @@ import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
 registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.eb1705af.csv","lastModified":1769196128746,"size":3124});
 registerFile("../img/marker-icon.png", {"name":"../img/marker-icon.png","mimeType":"image/png","path":"../_file/img/marker-icon.49c05e64.png","lastModified":1769196128791,"size":11070});
 
-define({id: "b962674f", inputs: ["FileAttachment","display"], outputs: ["L","link","data","themes","activeTheme","markers","mainContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","container","iconUrl","customIcon","map","updateTagStyles","updateMap"], body: async (FileAttachment,display) => {
+define({id: "464b3865", inputs: ["FileAttachment","display"], outputs: ["L","link","data","themes","activeTheme","markers","mainContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","container","iconUrl","customIcon","map","updateTagStyles","updateMap"], body: async (FileAttachment,display) => {
 const L = await import("https://cdn.skypack.dev/leaflet@1.9.4");
 
 // Add Leaflet CSS
@@ -192,9 +192,13 @@ let markers = [];
 
 // Create main container
 const mainContainer = display(document.createElement("div"));
-mainContainer.style.width = "70vw";
-mainContainer.style.paddingLeft = "15rem";
-mainContainer.style.paddingRight = "2rem";
+mainContainer.style.maxWidth = "1400px";
+mainContainer.style.margin = "0 auto";
+mainContainer.style.padding = "0 2rem";
+mainContainer.style.width = "100%";
+// mainContainer.style.width = "70vw";
+// mainContainer.style.paddingLeft = "15rem";
+// mainContainer.style.paddingRight = "2rem";
 
 // Create theme filter section
 const filterSection = document.createElement("div");
@@ -405,10 +409,10 @@ return {L,link,data,themes,activeTheme,markers,mainContainer,filterSection,filte
 </nav>
 </aside>
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:b962674f:--></div>
+<div class="observablehq observablehq--block"><!--:464b3865:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T16:55:56">Jan 23, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T19:19:23">Jan 23, 2026</a>.</div>
 </footer>
 </div>
 </body>
