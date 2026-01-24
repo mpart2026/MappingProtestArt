@@ -23,9 +23,13 @@ let markers = [];
 
 // Create main container
 const mainContainer = display(document.createElement("div"));
-mainContainer.style.width = "70vw";
-mainContainer.style.paddingLeft = "15rem";
-mainContainer.style.paddingRight = "2rem";
+mainContainer.style.maxWidth = "1400px";
+mainContainer.style.margin = "0 auto";
+mainContainer.style.padding = "0 2rem";
+mainContainer.style.width = "100%";
+// mainContainer.style.width = "70vw";
+// mainContainer.style.paddingLeft = "15rem";
+// mainContainer.style.paddingRight = "2rem";
 
 // Create theme filter section
 const filterSection = document.createElement("div");
