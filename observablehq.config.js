@@ -185,7 +185,7 @@ export default {
       
       <a href="./home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="./map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="./Map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
       <a href="./collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
