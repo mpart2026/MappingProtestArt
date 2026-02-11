@@ -11,7 +11,7 @@ export default {
   // lets you organize them into sections and have unlisted pages.
   pages: [
     { name: "Home", path: "home/index", open: false },
-    { name: "Map", path: "map/index", open: false },
+    { name: "Map", path: "Map/index", open: false },
     { name: "Collection", path: "collection/index", open: false },
     { name: "Visualizations", path: "visualizations/index", open: false },
     { name: "Contact", path: "contact/index", open: false }
