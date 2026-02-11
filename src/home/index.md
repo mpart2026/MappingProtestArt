@@ -65,7 +65,7 @@ mapWidget.addEventListener("mouseout", () => {
 });
 
 mapWidget.addEventListener("click", () => {
-  window.location.href = "../map/index";
+  window.location.href = "../Map/index";
 });
 
 const mapIcon = document.createElement("div");
