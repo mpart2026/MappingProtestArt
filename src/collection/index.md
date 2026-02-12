@@ -223,8 +223,8 @@ function sortData(dataToSort) {
     });
   } else if (sortBy === "year") {
     sorted.sort((a, b) => {
-      const yearA = parseInt(a['Creation Year']) || 0;
-      const yearB = parseInt(b['Creation Year']) || 0;
+      const yearA = parseInt(a['Year']) || 0;
+      const yearB = parseInt(b['Year']) || 0;
       return yearB - yearA;
     });
   }
@@ -276,7 +276,7 @@ function updateDisplay() {
     // Metadata line
     const metadata = [];
     if (row.Creator) metadata.push(`<strong>Creator:</strong> ${row.Creator}`);
-    if (row['Creation Year']) metadata.push(`<strong>Year:</strong> ${row['Creation Year']}`);
+    if (row['Year']) metadata.push(`<strong>Year:</strong> ${row['Year']}`);
     if (row.Material) metadata.push(`<strong>Material:</strong> ${row.Material}`);
     if (row.Medium) metadata.push(`<strong>Medium:</strong> ${row.Medium}`);
     
