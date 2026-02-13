@@ -14,7 +14,7 @@ export default {
     { name: "Map", path: "map/index", open: false },
     { name: "Collection", path: "collection/index", open: false },
     { name: "Visualizations", path: "visualizations/index", open: false },
-    { name: "Contact", path: "contact/index", open: false }
+    { name: "Contact Us", path: "contact/index", open: false }
   ],
   
   // Content to add to the head of the page, e.g. for a favicon:
@@ -191,7 +191,7 @@ export default {
            
       <a href="./visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="./contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+      <a href="./contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact Us</a>
 
     </nav>
   `,
