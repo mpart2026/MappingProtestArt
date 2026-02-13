@@ -1,6 +1,6 @@
 ---
 title: "Map"
-toc: true
+toc: false
 ---
 ```js
 import * as L from "https://cdn.skypack.dev/leaflet@1.9.4";
