@@ -10,7 +10,7 @@
 <link rel="preload" as="style" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="modulepreload" href="../_observablehq/client.eac1cff3.js">
+<link rel="modulepreload" href="../_observablehq/client.ee988f02.js">
 <link rel="modulepreload" href="../_observablehq/runtime.e080113b.js">
 <link rel="modulepreload" href="../_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/9cffc2bd.js">
@@ -165,214 +165,43 @@
   
 <script type="module">
 
-import {define} from "../_observablehq/client.eac1cff3.js";
+import {define} from "../_observablehq/client.ee988f02.js";
 import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.eb1705af.csv","lastModified":1769196128746,"size":3124});
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.2f9f7be8.csv","lastModified":1770940694743,"size":16464});
 
-define({id: "62c4056a", inputs: ["FileAttachment","display"], outputs: ["data","container","header","subtitle","widgetsContainer","totalArtworks","uniqueThemes","uniqueCreators","mapWidget","mapIcon","mapTitle","mapDesc","mapButton","collectionsWidget","collectionsIcon","collectionsTitle","collectionsDesc","collectionsButton","statsSection","statsTitle","statsGrid","stats"], body: async (FileAttachment,display) => {
+define({id: "0dadcfe1", inputs: ["FileAttachment"], outputs: ["data","totalArtworks","uniqueThemes","uniqueCreators"], body: async (FileAttachment) => {
 // Load data to show statistics
 const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
-
-// Create main container
-const container = display(document.createElement("div"));
-container.style.maxWidth = "1200px";
-container.style.margin = "0 auto";
-container.style.padding = "2rem";
-container.style.fontFamily = "system-ui, -apple-system, sans-serif";
-
-// Add welcome header
-const header = document.createElement("h1");
-header.textContent = "Welcome to the Artwork Collection";
-header.style.marginBottom = "1rem";
-header.style.textAlign = "center";
-header.style.color = "#333";
-container.appendChild(header);
-
-// Add subtitle
-const subtitle = document.createElement("p");
-subtitle.textContent = "Explore our collection through the map or browse by themes and categories";
-subtitle.style.textAlign = "center";
-subtitle.style.color = "#666";
-subtitle.style.fontSize = "1.1rem";
-subtitle.style.marginBottom = "3rem";
-container.appendChild(subtitle);
-
-// Create widgets container
-const widgetsContainer = document.createElement("div");
-widgetsContainer.style.display = "grid";
-widgetsContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))";
-widgetsContainer.style.gap = "2rem";
-widgetsContainer.style.marginBottom = "3rem";
-
 // Calculate statistics
 const totalArtworks = data.length;
 const uniqueThemes = [...new Set(data.map(row => row.Theme).filter(Boolean))].length;
 const uniqueCreators = [...new Set(data.map(row => row.Creator).filter(Boolean))].length;
+return {data,totalArtworks,uniqueThemes,uniqueCreators};
+}});
 
-// Widget 1: Map View
-const mapWidget = document.createElement("div");
-mapWidget.style.backgroundColor = "#f8f9fa";
-mapWidget.style.padding = "2rem";
-mapWidget.style.borderRadius = "12px";
-mapWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
-mapWidget.style.cursor = "pointer";
-mapWidget.style.transition = "transform 0.2s, box-shadow 0.2s";
-mapWidget.style.border = "2px solid transparent";
+define({id: "a244c9ad", mode: "inline", inputs: ["totalArtworks","display"], body: async (totalArtworks,display) => {
+display(await(
+totalArtworks
+))
+}});
 
-mapWidget.addEventListener("mouseover", () => {
-  mapWidget.style.transform = "translateY(-5px)";
-  mapWidget.style.boxShadow = "0 8px 12px rgba(0,0,0,0.15)";
-  mapWidget.style.borderColor = "#0066cc";
-});
+define({id: "a244c9ad-1", mode: "inline", inputs: ["totalArtworks","display"], body: async (totalArtworks,display) => {
+display(await(
+totalArtworks
+))
+}});
 
-mapWidget.addEventListener("mouseout", () => {
-  mapWidget.style.transform = "translateY(0)";
-  mapWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
-  mapWidget.style.borderColor = "transparent";
-});
+define({id: "389b9e02", mode: "inline", inputs: ["uniqueThemes","display"], body: async (uniqueThemes,display) => {
+display(await(
+uniqueThemes
+))
+}});
 
-mapWidget.addEventListener("click", () => {
-  window.location.href = "../map/index";
-});
-
-const mapIcon = document.createElement("div");
-mapIcon.innerHTML = "🗺️";
-mapIcon.style.fontSize = "3rem";
-mapIcon.style.marginBottom = "1rem";
-mapWidget.appendChild(mapIcon);
-
-const mapTitle = document.createElement("h2");
-mapTitle.textContent = "Explore Map";
-mapTitle.style.marginTop = "0";
-mapTitle.style.marginBottom = "0.5rem";
-mapTitle.style.color = "#0066cc";
-mapWidget.appendChild(mapTitle);
-
-const mapDesc = document.createElement("p");
-mapDesc.textContent = `View ${totalArtworks} artworks on an interactive map. Filter by theme and explore geographical locations.`;
-mapDesc.style.color = "#666";
-mapDesc.style.lineHeight = "1.6";
-mapWidget.appendChild(mapDesc);
-
-const mapButton = document.createElement("div");
-mapButton.textContent = "View Map →";
-mapButton.style.marginTop = "1rem";
-mapButton.style.color = "#0066cc";
-mapButton.style.fontWeight = "bold";
-mapWidget.appendChild(mapButton);
-
-widgetsContainer.appendChild(mapWidget);
-
-// Widget 2: Collections View
-const collectionsWidget = document.createElement("div");
-collectionsWidget.style.backgroundColor = "#f8f9fa";
-collectionsWidget.style.padding = "2rem";
-collectionsWidget.style.borderRadius = "12px";
-collectionsWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
-collectionsWidget.style.cursor = "pointer";
-collectionsWidget.style.transition = "transform 0.2s, box-shadow 0.2s";
-collectionsWidget.style.border = "2px solid transparent";
-
-collectionsWidget.addEventListener("mouseover", () => {
-  collectionsWidget.style.transform = "translateY(-5px)";
-  collectionsWidget.style.boxShadow = "0 8px 12px rgba(0,0,0,0.15)";
-  collectionsWidget.style.borderColor = "#0066cc";
-});
-
-collectionsWidget.addEventListener("mouseout", () => {
-  collectionsWidget.style.transform = "translateY(0)";
-  collectionsWidget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
-  collectionsWidget.style.borderColor = "transparent";
-});
-
-collectionsWidget.addEventListener("click", () => {
-  window.location.href = "../collection/index";
-});
-
-const collectionsIcon = document.createElement("div");
-collectionsIcon.innerHTML = "📚";
-collectionsIcon.style.fontSize = "3rem";
-collectionsIcon.style.marginBottom = "1rem";
-collectionsWidget.appendChild(collectionsIcon);
-
-const collectionsTitle = document.createElement("h2");
-collectionsTitle.textContent = "Browse Collections";
-collectionsTitle.style.marginTop = "0";
-collectionsTitle.style.marginBottom = "0.5rem";
-collectionsTitle.style.color = "#0066cc";
-collectionsWidget.appendChild(collectionsTitle);
-
-const collectionsDesc = document.createElement("p");
-collectionsDesc.textContent = `Browse ${totalArtworks} artworks organized by theme. Sort by title, creator, or year.`;
-collectionsDesc.style.color = "#666";
-collectionsDesc.style.lineHeight = "1.6";
-collectionsWidget.appendChild(collectionsDesc);
-
-const collectionsButton = document.createElement("div");
-collectionsButton.textContent = "Browse Collections →";
-collectionsButton.style.marginTop = "1rem";
-collectionsButton.style.color = "#0066cc";
-collectionsButton.style.fontWeight = "bold";
-collectionsWidget.appendChild(collectionsButton);
-
-widgetsContainer.appendChild(collectionsWidget);
-
-container.appendChild(widgetsContainer);
-
-// Add statistics section
-const statsSection = document.createElement("div");
-statsSection.style.backgroundColor = "#fff";
-statsSection.style.padding = "2rem";
-statsSection.style.borderRadius = "12px";
-statsSection.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
-statsSection.style.marginTop = "2rem";
-
-const statsTitle = document.createElement("h2");
-statsTitle.textContent = "Collection Overview";
-statsTitle.style.marginTop = "0";
-statsTitle.style.marginBottom = "1.5rem";
-statsTitle.style.textAlign = "center";
-statsTitle.style.color = "#333";
-statsSection.appendChild(statsTitle);
-
-const statsGrid = document.createElement("div");
-statsGrid.style.display = "grid";
-statsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
-statsGrid.style.gap = "2rem";
-statsGrid.style.textAlign = "center";
-
-const stats = [
-  { label: "Total Artworks", value: totalArtworks, color: "#0066cc" },
-  { label: "Themes", value: uniqueThemes, color: "#28a745" },
-  { label: "Creators", value: uniqueCreators, color: "#dc3545" }
-];
-
-stats.forEach(stat => {
-  const statItem = document.createElement("div");
-  
-  const statValue = document.createElement("div");
-  statValue.textContent = stat.value;
-  statValue.style.fontSize = "2.5rem";
-  statValue.style.fontWeight = "bold";
-  statValue.style.color = stat.color;
-  statValue.style.marginBottom = "0.5rem";
-  statItem.appendChild(statValue);
-  
-  const statLabel = document.createElement("div");
-  statLabel.textContent = stat.label;
-  statLabel.style.color = "#666";
-  statLabel.style.fontSize = "0.9rem";
-  statLabel.style.textTransform = "uppercase";
-  statLabel.style.letterSpacing = "1px";
-  statItem.appendChild(statLabel);
-  
-  statsGrid.appendChild(statItem);
-});
-
-statsSection.appendChild(statsGrid);
-container.appendChild(statsSection);
-return {data,container,header,subtitle,widgetsContainer,totalArtworks,uniqueThemes,uniqueCreators,mapWidget,mapIcon,mapTitle,mapDesc,mapButton,collectionsWidget,collectionsIcon,collectionsTitle,collectionsDesc,collectionsButton,statsSection,statsTitle,statsGrid,stats};
+define({id: "62f51090", mode: "inline", inputs: ["uniqueCreators","display"], body: async (uniqueCreators,display) => {
+display(await(
+uniqueCreators
+))
 }});
 
 </script>
@@ -391,7 +220,7 @@ return {data,container,header,subtitle,widgetsContainer,totalArtworks,uniqueThem
       
       <a href="./" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="../map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="../Map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
       <a href="../collection/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
@@ -407,10 +236,54 @@ return {data,container,header,subtitle,widgetsContainer,totalArtworks,uniqueThem
 </nav>
 </aside>
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:62c4056a:--></div>
-</main>
+<div class="observablehq observablehq--block"><!--:0dadcfe1:--></div>
+<h1 id="welcome-to-the-protest-art-collection" tabindex="-1"><a class="observablehq-header-anchor" href="#welcome-to-the-protest-art-collection">Welcome to the Protest Art Collection</a></h1>
+<p>Protest art transforms moments of social, political, and cultural tension into creative acts that challenge injustice, confront power structures, and amplify marginalized voices. Mapping Protest Art (MPA) collects and visualizes protest art from around the world, spanning murals, installations, digital works, and ephemeral street actions, to reveal shared strategies, local struggles, and global solidarities.
+<br>
+Explore our collection through the map or browse by themes and categories</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+  <a href="../map/" style="text-decoration: none; color: inherit;">
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 12px rgba(0,0,0,0.15)'; this.style.borderColor='#0066cc';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+      <h2 style="margin: 0 0 0.5rem 0; color: #0066cc; font-size: 1.5rem;">Explore Map</h2>
+      <p style="color: #666; line-height: 1.6; margin: 0 0 1rem 0; font-size: 1rem;">View <observablehq-loading></observablehq-loading><!--:a244c9ad:--> artworks on an interactive map. <br>Filter by theme and explore geographical locations.</p> 
+      <div style="color: #0066cc; font-weight: bold; font-size: 1rem;">View Map →</div>
+    </div>
+  </a>
+  <a href="../collection/" style="text-decoration: none; color: inherit;">
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 12px rgba(0,0,0,0.15)'; this.style.borderColor='#0066cc';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+      <h2 style="margin: 0 0 0.5rem 0; color: #0066cc; font-size: 1.5rem;">Browse Collections</h2>
+      <p style="color: #666; line-height: 1.6; margin: 0 0 1rem 0; font-size: 1rem;">Browse the collection organized by theme. <br> Sort by title, creator, or year.</p> <br>
+      <div style="color: #0066cc; font-weight: bold; font-size: 1rem;">Browse Collections →</div>
+    </div>
+  </a>
+  <a href="../visualizations/" style="text-decoration: none; color: inherit;">
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 12px rgba(0,0,0,0.15)'; this.style.borderColor='#0066cc';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'; this.style.borderColor='transparent';">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+      <h2 style="margin: 0 0 0.5rem 0; color: #0066cc; font-size: 1.5rem;">View Visualizations</h2>
+      <p style="color: #666; line-height: 1.6; margin: 0 0 1rem 0; font-size: 1rem;">Explore data visualizations including geographic distributions, theme breakdowns, and space descriptions.</p>
+      <div style="color: #0066cc; font-weight: bold; font-size: 1rem;">View Charts →</div>
+    </div>
+  </a>
+</div>
+<h2>Collection Overview </h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-top: 2rem;">
+  <div>
+    <div style="font-size: 2.5rem; font-weight: bold; color: #0066cc; margin-bottom: 0.5rem;"><observablehq-loading></observablehq-loading><!--:a244c9ad-1:--></div>
+    <div style="color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Total Artworks</div>
+  </div>
+  <div>
+    <div style="font-size: 2.5rem; font-weight: bold; color: #28a745; margin-bottom: 0.5rem;"><observablehq-loading></observablehq-loading><!--:389b9e02:--></div>
+    <div style="color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Themes</div>
+  </div>
+  <div>
+    <div style="font-size: 2.5rem; font-weight: bold; color: #dc3545; margin-bottom: 0.5rem;"><observablehq-loading></observablehq-loading><!--:62f51090:--></div>
+    <div style="color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Creators</div>
+  </div>
+</div></main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T19:20:29">Jan 23, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-02-12T19:50:10">Feb 12, 2026</a>.</div>
 </footer>
 </div>
 </body>

@@ -10,7 +10,7 @@
 <link rel="preload" as="style" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="../_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="modulepreload" href="../_observablehq/client.eac1cff3.js">
+<link rel="modulepreload" href="../_observablehq/client.ee988f02.js">
 <link rel="modulepreload" href="../_observablehq/runtime.e080113b.js">
 <link rel="modulepreload" href="../_observablehq/stdlib.73a8ec5a.js">
 <link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/9cffc2bd.js">
@@ -165,12 +165,12 @@
   
 <script type="module">
 
-import {define} from "../_observablehq/client.eac1cff3.js";
+import {define} from "../_observablehq/client.ee988f02.js";
 import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.eb1705af.csv","lastModified":1769196128746,"size":3124});
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.2f9f7be8.csv","lastModified":1770940694743,"size":16464});
 
-define({id: "02fdba61", inputs: ["FileAttachment","display"], outputs: ["data","container","header","divider","activeTheme","sortBy","themes","controlsContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","sortSection","sortLabel","sortButtonsContainer","sortOptions","sortButtons","itemsContainer","footer","updateTagStyles","updateSortStyles","sortData","updateDisplay"], body: async (FileAttachment,display) => {
+define({id: "2ad85ab2", inputs: ["FileAttachment","display"], outputs: ["data","container","header","divider","activeTheme","sortBy","themes","controlsContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","sortSection","sortLabel","sortButtonsContainer","sortOptions","sortButtons","itemsContainer","footer","updateTagStyles","updateSortStyles","sortData","updateDisplay"], body: async (FileAttachment,display) => {
 // Load and parse CSV file using FileAttachment
 const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 
@@ -395,8 +395,8 @@ function sortData(dataToSort) {
     });
   } else if (sortBy === "year") {
     sorted.sort((a, b) => {
-      const yearA = parseInt(a['Creation Year']) || 0;
-      const yearB = parseInt(b['Creation Year']) || 0;
+      const yearA = parseInt(a['Year']) || 0;
+      const yearB = parseInt(b['Year']) || 0;
       return yearB - yearA;
     });
   }
@@ -448,7 +448,7 @@ function updateDisplay() {
     // Metadata line
     const metadata = [];
     if (row.Creator) metadata.push(`<strong>Creator:</strong> ${row.Creator}`);
-    if (row['Creation Year']) metadata.push(`<strong>Year:</strong> ${row['Creation Year']}`);
+    if (row['Year']) metadata.push(`<strong>Year:</strong> ${row['Year']}`);
     if (row.Material) metadata.push(`<strong>Material:</strong> ${row.Material}`);
     if (row.Medium) metadata.push(`<strong>Medium:</strong> ${row.Medium}`);
     
@@ -514,7 +514,7 @@ return {data,container,header,divider,activeTheme,sortBy,themes,controlsContaine
       
       <a href="../home/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="../map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="../Map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
       <a href="./" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
@@ -526,10 +526,10 @@ return {data,container,header,divider,activeTheme,sortBy,themes,controlsContaine
   
 </header>
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:02fdba61:--></div>
+<div class="observablehq observablehq--block"><!--:2ad85ab2:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-01-23T19:20:29">Jan 23, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-02-12T19:50:10">Feb 12, 2026</a>.</div>
 </footer>
 </div>
 </body>
