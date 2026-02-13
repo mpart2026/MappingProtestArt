@@ -13,6 +13,8 @@ const uniqueCreators = [...new Set(data.map(row => row.Creator).filter(Boolean))
 
 # Welcome to the Protest Art Collection
 
+Protest art transforms moments of social, political, and cultural tension into creative acts that challenge injustice, confront power structures, and amplify marginalized voices. Mapping Protest Art (MPA) collects and visualizes protest art from around the world, spanning murals, installations, digital works, and ephemeral street actions, to reveal shared strategies, local struggles, and global solidarities. 
+<br>
 Explore our collection through the map or browse by themes and categories
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
