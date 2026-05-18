@@ -303,7 +303,7 @@ function updateDisplay() {
     const details = [];
     if (row.Theme) details.push(`<strong>Theme:</strong> ${row.Theme}`);
     if (row.Location) details.push(`<strong>Location:</strong> ${row.Location}`);
-    if (row['Visual Tags']) details.push(`<em>Tags: ${row['Visual Tags']}</em>`);
+    if (row['Visualtags']) details.push(`<strong>Tags:</strong> ${row['Visualtags']}</em>`);
     
     if (details.length > 0) {
       const detailsDiv = document.createElement("div");
