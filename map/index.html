@@ -168,10 +168,10 @@
 import {define} from "../_observablehq/client.ee988f02.js";
 import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.2f9f7be8.csv","lastModified":1770940694743,"size":16464});
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.3244a51a.csv","lastModified":1778543534408,"size":81765});
 registerFile("../img/marker-icon.png", {"name":"../img/marker-icon.png","mimeType":"image/png","path":"../_file/img/marker-icon.49c05e64.png","lastModified":1769196128791,"size":11070});
 
-define({id: "464b3865", inputs: ["FileAttachment","display"], outputs: ["L","link","data","themes","activeTheme","markers","mainContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","container","iconUrl","customIcon","map","updateTagStyles","updateMap"], body: async (FileAttachment,display) => {
+define({id: "9a77640e", inputs: ["FileAttachment","display"], outputs: ["L","link","data","themes","activeTheme","activeVisualTag","markers","mainContainer","getRelevantVisualTags","createFilterSection","visualTagSection","buildVisualTagSection","themeSection","container","iconUrl","customIcon","map","updateMap"], body: async (FileAttachment,display) => {
 const L = await import("https://cdn.skypack.dev/leaflet@1.9.4");
 
 // Add Leaflet CSS
@@ -180,14 +180,13 @@ link.rel = "stylesheet";
 link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
 document.head.appendChild(link);
 
-// Load and parse CSV file using FileAttachment
 const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 
-// Extract unique themes
 const themes = [...new Set(data.map(row => row.Theme).filter(Boolean))].sort();
 
-// State variable
+// State variables
 let activeTheme = null;
+let activeVisualTag = null;
 let markers = [];
 
 // Create main container
@@ -196,185 +195,226 @@ mainContainer.style.maxWidth = "1400px";
 mainContainer.style.margin = "0 auto";
 mainContainer.style.padding = "0 2rem";
 mainContainer.style.width = "100%";
-// mainContainer.style.width = "70vw";
-// mainContainer.style.paddingLeft = "15rem";
-// mainContainer.style.paddingRight = "2rem";
 
-// Create theme filter section
-const filterSection = document.createElement("div");
-filterSection.style.marginBottom = "1rem";
-filterSection.style.padding = "1rem";
-filterSection.style.backgroundColor = "#f5f5f5";
-filterSection.style.borderRadius = "8px";
+// Helper: get visual tags relevant to current theme (or all if no theme selected)
+function getRelevantVisualTags() {
+  const subset = activeTheme !== null
+    ? data.filter(row => row.Theme === activeTheme)
+    : data;
+  const all = subset.flatMap(row =>
+    row['Visualtags'] ? row['Visualtags'].split(',').map(t => t.trim()).filter(Boolean) : []
+  );
+  return [...new Set(all)].sort();
+}
 
-const filterLabel = document.createElement("div");
-filterLabel.textContent = "Browse by Theme:";
-filterLabel.style.fontWeight = "bold";
-filterLabel.style.marginBottom = "0.75rem";
-filterLabel.style.fontSize = "1rem";
-filterSection.appendChild(filterLabel);
+// Helper: create a filter section with tags
+function createFilterSection(labelText, tags, getActive, onAllClick, onTagClick) {
+  const section = document.createElement("div");
+  section.style.marginBottom = "1rem";
+  section.style.padding = "1rem";
+  section.style.backgroundColor = "#f5f5f5";
+  section.style.borderRadius = "8px";
 
-const tagContainer = document.createElement("div");
-tagContainer.style.display = "flex";
-tagContainer.style.flexWrap = "wrap";
-tagContainer.style.gap = "0.5rem";
+  const label = document.createElement("div");
+  label.textContent = labelText;
+  label.style.fontWeight = "bold";
+  label.style.marginBottom = "0.75rem";
+  label.style.fontSize = "1rem";
+  section.appendChild(label);
 
-// Create "All" tag
-const allTag = document.createElement("button");
-allTag.textContent = "All";
-allTag.style.padding = "0.5rem 1rem";
-allTag.style.border = "1px solid #0066cc";
-allTag.style.borderRadius = "20px";
-allTag.style.cursor = "pointer";
-allTag.style.fontSize = "0.9rem";
-allTag.style.transition = "all 0.2s";
-allTag.style.backgroundColor = "#0066cc";
-allTag.style.color = "white";
+  const tagContainer = document.createElement("div");
+  tagContainer.style.display = "flex";
+  tagContainer.style.flexWrap = "wrap";
+  tagContainer.style.gap = "0.5rem";
 
-allTag.addEventListener("click", () => {
-  activeTheme = null;
-  updateMap();
-  updateTagStyles();
-});
+  const allTag = document.createElement("button");
+  allTag.textContent = "All";
+  allTag.style.padding = "0.5rem 1rem";
+  allTag.style.border = "1px solid #0066cc";
+  allTag.style.borderRadius = "20px";
+  allTag.style.cursor = "pointer";
+  allTag.style.fontSize = "0.9rem";
+  allTag.style.transition = "all 0.2s";
+  allTag.style.backgroundColor = "#0066cc";
+  allTag.style.color = "white";
 
-tagContainer.appendChild(allTag);
+  const tagButtons = {};
 
-// Create theme tags
-const themeTags = {};
-themes.forEach(theme => {
-  const tag = document.createElement("button");
-  tag.textContent = theme;
-  tag.style.padding = "0.5rem 1rem";
-  tag.style.border = "1px solid #0066cc";
-  tag.style.borderRadius = "20px";
-  tag.style.backgroundColor = "white";
-  tag.style.color = "#0066cc";
-  tag.style.cursor = "pointer";
-  tag.style.fontSize = "0.9rem";
-  tag.style.transition = "all 0.2s";
-  
-  tag.addEventListener("mouseover", () => {
-    if (activeTheme !== theme) {
-      tag.style.backgroundColor = "#e6f2ff";
-    }
-  });
-  
-  tag.addEventListener("mouseout", () => {
-    if (activeTheme !== theme) {
-      tag.style.backgroundColor = "white";
-    }
-  });
-  
-  tag.addEventListener("click", () => {
-    activeTheme = theme;
+  function updateStyles() {
+    const active = getActive();
+    allTag.style.backgroundColor = active === null ? "#0066cc" : "white";
+    allTag.style.color = active === null ? "white" : "#0066cc";
+    Object.keys(tagButtons).forEach(key => {
+      tagButtons[key].style.backgroundColor = active === key ? "#0066cc" : "white";
+      tagButtons[key].style.color = active === key ? "white" : "#0066cc";
+    });
+  }
+
+  allTag.addEventListener("click", () => {
+    onAllClick();
+    updateStyles();
     updateMap();
-    updateTagStyles();
   });
-  
-  themeTags[theme] = tag;
-  tagContainer.appendChild(tag);
-});
+  tagContainer.appendChild(allTag);
 
-filterSection.appendChild(tagContainer);
-mainContainer.appendChild(filterSection);
+  tags.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.textContent = tag;
+    btn.style.padding = "0.5rem 1rem";
+    btn.style.border = "1px solid #0066cc";
+    btn.style.borderRadius = "20px";
+    btn.style.backgroundColor = "white";
+    btn.style.color = "#0066cc";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "0.9rem";
+    btn.style.transition = "all 0.2s";
 
-// Create map container
+    btn.addEventListener("mouseover", () => {
+      if (getActive() !== tag) btn.style.backgroundColor = "#e6f2ff";
+    });
+    btn.addEventListener("mouseout", () => {
+      if (getActive() !== tag) btn.style.backgroundColor = "white";
+    });
+    btn.addEventListener("click", () => {
+      onTagClick(tag);
+      updateStyles();
+      updateMap();
+    });
+
+    tagButtons[tag] = btn;
+    tagContainer.appendChild(btn);
+  });
+
+  section.appendChild(tagContainer);
+  section._updateStyles = updateStyles;
+
+  return section;
+}
+
+// --- Visual tag section (rebuilt dynamically) ---
+let visualTagSection = null;
+
+function buildVisualTagSection() {
+  const relevantTags = getRelevantVisualTags();
+
+  const section = createFilterSection(
+    "Browse by Visual Tag:",
+    relevantTags,
+    () => activeVisualTag,
+    () => { activeVisualTag = null; },
+    (tag) => { activeVisualTag = tag; }
+  );
+
+  if (visualTagSection && visualTagSection.parentNode) {
+    visualTagSection.parentNode.replaceChild(section, visualTagSection);
+  }
+  visualTagSection = section;
+  return section;
+}
+
+// --- Theme filter section ---
+const themeSection = createFilterSection(
+  "Browse by Theme:",
+  themes,
+  () => activeTheme,
+  () => {
+    activeTheme = null;
+    activeVisualTag = null;  // reset tag when theme cleared
+    buildVisualTagSection();
+  },
+  (tag) => {
+    activeTheme = tag;
+    activeVisualTag = null;  // reset tag when theme changes
+    buildVisualTagSection();
+  }
+);
+mainContainer.appendChild(themeSection);
+
+// Map container
 const container = document.createElement("div");
 container.style.width = "100%";
 container.style.height = "600px";
+container.style.marginBottom = "1rem";
 mainContainer.appendChild(container);
+
+// Build initial visual tag section and append
+visualTagSection = buildVisualTagSection();
+mainContainer.appendChild(visualTagSection);
 
 // Load custom icon
 const iconUrl = await FileAttachment("../img/marker-icon.png").url();
 const customIcon = L.icon({
   iconUrl: iconUrl,
-  iconSize: [25, 31],
+  iconSize: [20, 23],
   iconAnchor: [12, 31],
   popupAnchor: [1, -34]
 });
 
-// Initialize the map
-const map = L.map(container).setView([40, -95], 4);
-
-// Add OpenStreetMap tiles
-// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-//   maxZoom: 19,
-//   noWrap: true
-// }).addTo(map);
+// Initialize map
+const map = L.map(container, {
+  worldCopyJump: false,
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0,
+  minZoom: 2
+}).setView([40, -95], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   maxZoom: 18
 }).addTo(map);
 
-function updateTagStyles() {
-  allTag.style.backgroundColor = activeTheme === null ? "#0066cc" : "white";
-  allTag.style.color = activeTheme === null ? "white" : "#0066cc";
-  
-  Object.keys(themeTags).forEach(theme => {
-    const tag = themeTags[theme];
-    tag.style.backgroundColor = activeTheme === theme ? "#0066cc" : "white";
-    tag.style.color = activeTheme === theme ? "white" : "#0066cc";
-  });
-}
-
 function updateMap() {
-  // Clear existing markers
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
-  
-  // Filter data based on active theme
-  const filteredData = activeTheme === null 
-    ? data 
-    : data.filter(row => row.Theme === activeTheme);
-  
-  // Create markers for filtered data
+
+  let filteredData = data;
+  if (activeTheme !== null) {
+    filteredData = filteredData.filter(row => row.Theme === activeTheme);
+  }
+  if (activeVisualTag !== null) {
+    filteredData = filteredData.filter(row => {
+      const tags = row['Visualtags'] ? row['Visualtags'].split(',').map(t => t.trim()) : [];
+      return tags.includes(activeVisualTag);
+    });
+  }
+
   filteredData.forEach(row => {
     const lat = parseFloat(row.Latitude);
     const lng = parseFloat(row.Longitude);
-    
-    // Skip rows with invalid coordinates
     if (isNaN(lat) || isNaN(lng)) return;
-    
-    // Create popup content
+
     const popupContent = `
       <div style="max-width: 300px;">
         <h3 style="margin-top: 0;">${row.Title || 'Untitled'}</h3>
         ${row.Creator ? `<p style="margin: 0;"><strong>Creator:</strong> ${row.Creator}</p>` : ''}
         ${row['Creation Year'] ? `<p style="margin: 0;"><strong>Year:</strong> ${row['Creation Year']}</p>` : ''}
-        ${row.Material ? `<p style="margin: 0;"><strong>Material:</strong> ${row.Material}</p>` : ''}
+        ${row.Year ? `<p style="margin: 0;"><strong>Year:</strong> ${row.Year}</p>` : ''}
         ${row.Medium ? `<p style="margin: 0;"><strong>Medium:</strong> ${row.Medium}</p>` : ''}
         ${row.Theme ? `<p style="margin: 0;"><strong>Theme:</strong> ${row.Theme}</p>` : ''}
-        ${row.Location ? `<p style="margin: 0;"><strong>Location:</strong> ${row.Location}</p>` : ''}
+        ${row.Country ? `<p style="margin: 0;"><strong>Country:</strong> ${row.Country}</p>` : ''}
         ${row.Description ? `<p style="margin: 0;">${row.Description}</p>` : ''}
-        ${row['Visual Tags'] ? `<p style="margin: 0;"><em>Tags: ${row['Visual Tags']}</em></p>` : ''}
+        ${row['Visualtags'] ? `<p style="margin: 0;"><strong>Tags:</strong> ${row['Visualtags']}</p>` : ''}
         ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" target="_blank">More Info</a></p>` : ''}
       </div>
     `;
-    
-    // Create marker and add to map
+
     const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
     marker.bindPopup(popupContent);
     markers.push(marker);
   });
-  
-  // Fit map to show all visible markers
+
   if (markers.length > 0) {
     const validCoords = filteredData
       .filter(row => !isNaN(parseFloat(row.Latitude)) && !isNaN(parseFloat(row.Longitude)))
       .map(row => [parseFloat(row.Latitude), parseFloat(row.Longitude)]);
-    
     if (validCoords.length > 0) {
-      const bounds = L.latLngBounds(validCoords);
-      map.fitBounds(bounds, { padding: [50, 50] });
+      map.fitBounds(L.latLngBounds(validCoords), { padding: [50, 50] });
     }
   }
 }
 
-// Initial map display with all markers
 updateMap();
-return {L,link,data,themes,activeTheme,markers,mainContainer,filterSection,filterLabel,tagContainer,allTag,themeTags,container,iconUrl,customIcon,map,updateTagStyles,updateMap};
+return {L,link,data,themes,activeTheme,activeVisualTag,markers,mainContainer,getRelevantVisualTags,createFilterSection,visualTagSection,buildVisualTagSection,themeSection,container,iconUrl,customIcon,map,updateMap};
 }});
 
 </script>
@@ -399,16 +439,16 @@ return {L,link,data,themes,activeTheme,markers,mainContainer,filterSection,filte
            
       <a href="../visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">About Us</a>
 
     </nav>
   
 </header>
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:464b3865:--></div>
+<div class="observablehq observablehq--block"><!--:9a77640e:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-02-12T19:59:00">Feb 12, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-05-18T17:57:32">May 18, 2026</a>.</div>
 </footer>
 </div>
 </body>

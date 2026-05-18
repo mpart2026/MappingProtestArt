@@ -168,9 +168,9 @@
 import {define} from "../_observablehq/client.ee988f02.js";
 import {registerFile} from "../_observablehq/stdlib.73a8ec5a.js";
 
-registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.2f9f7be8.csv","lastModified":1770940694743,"size":16464});
+registerFile("../data/artwork.csv", {"name":"../data/artwork.csv","mimeType":"text/csv","path":"../_file/data/artwork.3244a51a.csv","lastModified":1778543534408,"size":81765});
 
-define({id: "2ad85ab2", inputs: ["FileAttachment","display"], outputs: ["data","container","header","divider","activeTheme","sortBy","themes","controlsContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","sortSection","sortLabel","sortButtonsContainer","sortOptions","sortButtons","itemsContainer","footer","updateTagStyles","updateSortStyles","sortData","updateDisplay"], body: async (FileAttachment,display) => {
+define({id: "e58069bc", inputs: ["FileAttachment","display"], outputs: ["data","container","header","divider","activeTheme","sortBy","themes","controlsContainer","filterSection","filterLabel","tagContainer","allTag","themeTags","sortSection","sortLabel","sortButtonsContainer","sortOptions","sortButtons","itemsContainer","footer","updateTagStyles","updateSortStyles","sortData","updateDisplay"], body: async (FileAttachment,display) => {
 // Load and parse CSV file using FileAttachment
 const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 
@@ -475,7 +475,7 @@ function updateDisplay() {
     const details = [];
     if (row.Theme) details.push(`<strong>Theme:</strong> ${row.Theme}`);
     if (row.Location) details.push(`<strong>Location:</strong> ${row.Location}`);
-    if (row['Visual Tags']) details.push(`<em>Tags: ${row['Visual Tags']}</em>`);
+    if (row['Visualtags']) details.push(`<strong>Tags:</strong> ${row['Visualtags']}</em>`);
     
     if (details.length > 0) {
       const detailsDiv = document.createElement("div");
@@ -520,16 +520,16 @@ return {data,container,header,divider,activeTheme,sortBy,themes,controlsContaine
            
       <a href="../visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Contact</a>
+      <a href="../contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">About Us</a>
 
     </nav>
   
 </header>
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:2ad85ab2:--></div>
+<div class="observablehq observablehq--block"><!--:e58069bc:--></div>
 </main>
 <footer id="observablehq-footer">
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-02-12T19:59:00">Feb 12, 2026</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-05-18T17:57:32">May 18, 2026</a>.</div>
 </footer>
 </div>
 </body>
