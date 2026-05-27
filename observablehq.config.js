@@ -27,7 +27,7 @@ export default {
         gap: 1rem;
         position: static !important;
         top: 0;
-        background: #f8f9fa !important;
+        background: #bbe71a !important;
         z-index: 1000;
         padding-bottom: 1rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
