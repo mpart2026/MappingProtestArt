@@ -27,7 +27,7 @@ export default {
         gap: 1rem;
         position: static !important;
         top: 0;
-        background: var(--theme-background, white);
+        background: #f8f9fa !important;
         z-index: 1000;
         padding-bottom: 1rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -57,13 +57,13 @@ export default {
       }
       
       .header-logo {
-        height: 48px;
+        height: 40px;
         width: auto;
         cursor: pointer;
       }
       
       .header-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 600;
         margin: 0;
       }
@@ -87,6 +87,8 @@ export default {
         align-items: center;
         border-top: 1px solid var(--theme-foreground-faint, #ccc);
         padding-top: 1rem;
+        width: 100%;
+        justify-content: center;
       }
       
       .dropdown {
@@ -177,8 +179,9 @@ export default {
   header: `
     <div class="header-top">
       <a href="./home/index" class="header-link">
-        <img src="./mpalogo.png" alt="Logo" class="header-logo">
-        <h1 class="header-title">Mapping Protest Art</h1>
+         <img src="./mpalogo.png" alt="" class="header-logo">
+         <h1 class="header-title">Mapping Protest Art</h1>
+         <img src="./mpalogo.png" alt="" class="header-logo">
       </a>
     </div>
     <nav>
