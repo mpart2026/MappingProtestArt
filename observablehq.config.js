@@ -179,9 +179,9 @@ export default {
   header: `
     <div class="header-top">
       <a href="./home/index" class="header-link">
-         <img src="./mpalogo.png" alt="" class="header-logo">
+         <img src="img/mpalogo.png" alt="" class="header-logo">
          <h1 class="header-title">Mapping Protest Art</h1>
-         <img src="./mpalogo.png" alt="" class="header-logo">
+         <img src="img/mpalogoflip.png" alt="" class="header-logo">
       </a>
     </div>
     <nav>
