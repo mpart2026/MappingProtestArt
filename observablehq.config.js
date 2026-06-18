@@ -140,33 +140,7 @@ export default {
       .dropdown-menu a:hover {
         background: var(--theme-foreground-faintest, #f5f5f5);
       }
-    </style>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-          const toggle = dropdown.querySelector('.dropdown-toggle');
-          const menu = dropdown.querySelector('.dropdown-menu');
-          
-          toggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Close all other dropdowns
-            document.querySelectorAll('.dropdown-menu').forEach(m => {
-              if (m !== menu) m.classList.remove('show');
-            });
-            // Toggle this dropdown
-            menu.classList.toggle('show');
-          });
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function() {
-          document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            menu.classList.remove('show');
-          });
-        });
-      });
+      
       @media (max-width: 768px) {
 
       .header-top {
@@ -200,6 +174,33 @@ export default {
         padding-right: 0.5rem !important;
       }
     }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+          const toggle = dropdown.querySelector('.dropdown-toggle');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          
+          toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+              if (m !== menu) m.classList.remove('show');
+            });
+            // Toggle this dropdown
+            menu.classList.toggle('show');
+          });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+          document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove('show');
+          });
+        });
+      });
     </script>
   `,
   
@@ -211,7 +212,7 @@ export default {
   
   header: `
     <div class="header-top">
-      <a href="/home/" class="header-link">
+      <a href="/home/" class="header-link" style="flex-wrap: wrap; justify-content: center;">
          <img src="img/mpalogo.png" alt="" class="header-logo">
          <h1 class="header-title">Mapping Protest Art</h1>
          <img src="img/mpalogoflip.png" alt="" class="header-logo">
