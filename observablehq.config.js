@@ -6,15 +6,13 @@ export default {
   // Base path for GitHub Pages deployment - CHANGED from basePath to base
   base: "/MappingProtestArt",
   
-  // The pages and sections in the sidebar. If you don't specify this option,
-  // all pages will be listed in alphabetical order. Listing pages explicitly
-  // lets you organize them into sections and have unlisted pages.
+  // The pages and sections in the navigation bar. 
   pages: [
-    { name: "Home", path: "home/index", open: false },
-    { name: "Map", path: "map/index", open: false },
-    { name: "Collection", path: "collection/index", open: false },
-    { name: "Visualizations", path: "visualizations/index", open: false },
-    { name: "About Us", path: "contact/index", open: false }
+    { name: "Home", path: "home/", open: false },
+    { name: "Map", path: "map/", open: false },
+    { name: "Collection", path: "collection/", open: false },
+    { name: "Visualizations", path: "visualizations/", open: false },
+    { name: "About Us", path: "contact/", open: false }
   ],
   
   // Content to add to the head of the page, e.g. for a favicon:
@@ -178,7 +176,7 @@ export default {
   
   header: `
     <div class="header-top">
-      <a href="./home/index" class="header-link">
+      <a href="/home/" class="header-link">
          <img src="img/mpalogo.png" alt="" class="header-logo">
          <h1 class="header-title">Mapping Protest Art</h1>
          <img src="img/mpalogoflip.png" alt="" class="header-logo">
@@ -186,15 +184,15 @@ export default {
     </div>
     <nav>
       
-      <a href="./home/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
+      <a href="/home/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="./map/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
+      <a href="/map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
 
-      <a href="./collection/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
+      <a href="/collection/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
            
-      <a href="./visualizations/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
+      <a href="/visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
 
-      <a href="./contact/index" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">About Us</a>
+      <a href="/contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">About Us</a>
 
     </nav>
   `,
