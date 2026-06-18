@@ -1,12 +1,6 @@
-// See https://observablehq.com/framework/config for documentation.
 export default {
-  // The app's title; used in the sidebar and webpage titles.
   title: "Mapping Protest Art",
-  
-  // Base path for GitHub Pages deployment - CHANGED from basePath to base
   base: "/MappingProtestArt",
-  
-  // The pages and sections in the navigation bar. 
   pages: [
     { name: "Home", path: "home/", open: false },
     { name: "Map", path: "map/", open: false },
@@ -14,8 +8,7 @@ export default {
     { name: "Visualizations", path: "visualizations/", open: false },
     { name: "About Us", path: "contact/", open: false }
   ],
-  
-  // Content to add to the head of the page, e.g. for a favicon:
+
   head: `
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="observable.png" type="image/png" sizes="32x32">
@@ -23,216 +16,186 @@ export default {
       #observablehq-header {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        position: static !important;
-        top: 0;
         background: #bbe71a !important;
-        z-index: 1000;
-        padding-bottom: 1rem;
+        padding: 0.75rem 1rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
-      
-      .observablehq {
-        max-width: 100% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-      }
-      
-      #observablehq-center {
-        padding-right: 1rem !important;
+        position: relative;
+        z-index: 1000;
       }
 
-      #observablehq-main {
-        padding-top: 2rem;
-      }
-      
       .header-top {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 0.5rem 0;
+        justify-content: space-between;
+        width: 100%;
       }
-      
-      .header-logo {
-        height: 40px;
-        width: auto;
-        cursor: pointer;
-      }
-      
-      .header-title {
-        font-size: 2rem;
-        font-weight: 600;
-        margin: 0;
-      }
-      
+
       .header-link {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
         text-decoration: none;
         color: inherit;
-        transition: opacity 0.2s;
       }
-      
-      .header-link:hover {
-        opacity: 0.8;
-      }
-      
-      #observablehq-header nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        align-items: center;
-        border-top: 1px solid var(--theme-foreground-faint, #ccc);
-        padding-top: 1rem;
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      
-      .dropdown-toggle {
-        background: none;
-        border: none;
-        color: inherit;
-        font-size: inherit;
-        font-family: inherit;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-      }
-      
-      .dropdown-toggle:hover {
-        text-decoration: underline;
-      }
-      
-      .dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: var(--theme-background, white);
-        border: 1px solid var(--theme-foreground-faint, #ccc);
-        border-radius: 4px;
-        min-width: 160px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        z-index: 1000;
-        margin-top: 0.25rem;
-      }
-      
-      .dropdown-menu.show {
-        display: block;
-      }
-      
-      .dropdown-menu a {
-        display: block;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: inherit;
-        white-space: nowrap;
-      }
-      
-      .dropdown-menu a:hover {
-        background: var(--theme-foreground-faintest, #f5f5f5);
-      }
-      
-      @media (max-width: 768px) {
 
-      .header-top {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
+      .header-link:hover { opacity: 0.8; }
+
+      .header-logo {
+        height: 40px;
+        width: auto;
       }
 
       .header-title {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin: 0;
+        white-space: nowrap;
       }
 
-      .header-logo {
-        height: 30px;
-      }
-
+      /* Desktop nav */
       #observablehq-header nav {
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.25rem;
+        align-items: center;
+        border-top: 1px solid rgba(0,0,0,0.15);
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
         justify-content: center;
-        padding-top: 0.5rem;
       }
 
       #observablehq-header nav a {
-        padding: 0.25rem 0.5rem !important;
-        font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+        text-decoration: none;
+        color: inherit;
+        white-space: nowrap;
+        font-size: 1rem;
+        border-radius: 4px;
+      }
+
+      #observablehq-header nav a:hover {
+        background: rgba(0,0,0,0.1);
+      }
+
+      /* Hamburger button — hidden on desktop */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: currentColor;
+        border-radius: 2px;
+        transition: all 0.2s;
+      }
+
+      /* Mobile nav drawer — hidden by default */
+      .mobile-nav {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 0.75rem;
+        border-top: 1px solid rgba(0,0,0,0.15);
+        padding-top: 0.5rem;
+      }
+
+      .mobile-nav.open {
+        display: flex;
+      }
+
+      .mobile-nav a {
+        padding: 0.6rem 0.5rem;
+        text-decoration: none;
+        color: inherit;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+      }
+
+      .mobile-nav a:hover {
+        background: rgba(0,0,0,0.08);
+      }
+
+      /* Main content */
+      #observablehq-main {
+        padding-top: 2rem;
       }
 
       .observablehq {
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
       }
-    }
+
+      /* ── MOBILE ── */
+      @media (max-width: 768px) {
+        .header-title {
+          font-size: 1.1rem;
+        }
+
+        .header-logo {
+          height: 28px;
+        }
+
+        /* Hide desktop nav, show hamburger */
+        #observablehq-header nav {
+          display: none;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+      }
     </style>
+  `,
+
+  root: "src",
+  sidebar: false,
+
+  header: `
+    <div class="header-top">
+      <a href="/home/" class="header-link">
+        <img src="img/mpalogo.png" alt="" class="header-logo">
+        <h1 class="header-title">Mapping Protest Art</h1>
+        <img src="img/mpalogoflip.png" alt="" class="header-logo">
+      </a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Desktop nav -->
+    <nav>
+      <a href="/home/">Home</a>
+      <a href="/map/">Map</a>
+      <a href="/collection/">Collection</a>
+      <a href="/visualizations/">Visualizations</a>
+      <a href="/contact/">About Us</a>
+    </nav>
+
+    <!-- Mobile nav drawer -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="/home/">Home</a>
+      <a href="/map/">Map</a>
+      <a href="/collection/">Collection</a>
+      <a href="/visualizations/">Visualizations</a>
+      <a href="/contact/">About Us</a>
+    </div>
+
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        
-        dropdowns.forEach(dropdown => {
-          const toggle = dropdown.querySelector('.dropdown-toggle');
-          const menu = dropdown.querySelector('.dropdown-menu');
-          
-          toggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Close all other dropdowns
-            document.querySelectorAll('.dropdown-menu').forEach(m => {
-              if (m !== menu) m.classList.remove('show');
-            });
-            // Toggle this dropdown
-            menu.classList.toggle('show');
-          });
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function() {
-          document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            menu.classList.remove('show');
-          });
-        });
+      document.getElementById('hamburger-btn').addEventListener('click', function() {
+        document.getElementById('mobile-nav').classList.toggle('open');
       });
     </script>
   `,
-  
-  // The path to the source root.
-  root: "src",
-  
-  // Disable the sidebar and add a custom header with navigation
-  sidebar: false,
-  
-  header: `
-    <div class="header-top">
-      <a href="/home/" class="header-link" style="flex-wrap: wrap; justify-content: center;">
-         <img src="img/mpalogo.png" alt="" class="header-logo">
-         <h1 class="header-title">Mapping Protest Art</h1>
-         <img src="img/mpalogoflip.png" alt="" class="header-logo">
-      </a>
-    </div>
-    <nav>
-      
-      <a href="/home/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>
 
-      <a href="/map/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Map</a>
-
-      <a href="/collection/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Collection</a>
-           
-      <a href="/visualizations/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Visualizations</a>
-
-      <a href="/contact/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">About Us</a>
-
-    </nav>
-  `,
-  
   pager: false,
   toc: false,
 };
