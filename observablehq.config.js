@@ -83,8 +83,8 @@ export default {
         justify-content: center;
       }
       
-      /* ─── MOBILE ONLY (≤768px) — overrides above ─── */
-      @media (max-width: 768px) {
+      /* ─── MOBILE ONLY (≤900px) — overrides above ─── */
+      @media (max-width: 900px) {
         .header-top {
           flex-direction: column;
           text-align: center;
@@ -97,8 +97,10 @@ export default {
         }
 
         #observablehq-header nav {
+          flex-wrap: wrap;
           gap: 0.2rem;
           padding-top: 0.5rem;
+          overflow-y: hidden;
         }
 
         #observablehq-header nav a {
