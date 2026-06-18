@@ -317,6 +317,15 @@ Plot.plot({
     label: "Co-occurrences"
   },
   marks: [
+    Plot.rect(
+    activeThemes.flatMap(theme => activeTags.map(tag => ({ theme, tag }))),
+      {
+        x: "theme",
+        y: "tag",
+        fill: "#efefef",   // ← empty cell color
+        inset: 0.5
+      }
+    ),
     Plot.cell(filteredCells, {
       x: "theme",
       y: "tag",
@@ -334,8 +343,7 @@ Plot.plot({
       fill: d => d.count > maxCount * 0.6 ? "white" : "#333",
       fontSize: 10,
       fontWeight: "bold"
-    }),
-    Plot.frame()
+    })
   ]
 })
 ```
