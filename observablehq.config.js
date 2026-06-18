@@ -93,10 +93,11 @@ export default {
 
         .header-logo {
           height: 30px;
+          width: 100%;
         }
 
         #observablehq-header nav {
-          gap: 0.5rem;
+          gap: 0.2rem;
           padding-top: 0.5rem;
         }
 
