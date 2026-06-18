@@ -56,7 +56,7 @@ export default {
       }
       
       .header-logo {
-        height: 60px;
+        height: 70px;
         width: 100%;
         cursor: pointer;
       }
@@ -78,7 +78,6 @@ export default {
         display: flex;
         gap: 7rem;
         align-items: center;
-        border-top: 1px solid var(--theme-foreground-faint, #ccc);
         padding-top: 1rem;
         width: 100%;
         justify-content: center;
