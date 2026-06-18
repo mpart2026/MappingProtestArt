@@ -83,6 +83,48 @@ export default {
         justify-content: center;
       }
       
+      #back-to-top {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #1a1a1a;
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s, visibility 0.25s, transform 0.2s;
+        z-index: 2000;
+      }
+
+      #back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      #back-to-top:hover {
+        transform: translateY(-3px);
+        background: #333;
+      }
+
+      @media (max-width: 768px) {
+        #back-to-top {
+          width: 40px;
+          height: 40px;
+          bottom: 1rem;
+          right: 1rem;
+          font-size: 1.1rem;
+        }
+      }
+        
       /* ─── MOBILE ONLY (≤900px) — overrides above ─── */
       @media (max-width: 900px) {
         .header-top {
@@ -165,8 +207,12 @@ export default {
 
 
     </style>
+
+    <button id="back-to-top" aria-label="Back to top">↑</button>
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function() {
         const dropdowns = document.querySelectorAll('.dropdown');
         
         dropdowns.forEach(dropdown => {
@@ -189,6 +235,22 @@ export default {
           document.querySelectorAll('.dropdown-menu').forEach(menu => {
             menu.classList.remove('show');
           });
+        });
+      });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 400) {
+            backToTopBtn.classList.add('visible');
+          } else {
+            backToTopBtn.classList.remove('visible');
+          }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       });
     </script>
