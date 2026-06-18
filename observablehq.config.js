@@ -17,6 +17,7 @@ export default {
   
   // Content to add to the head of the page, e.g. for a favicon:
   head: `
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="observable.png" type="image/png" sizes="32x32">
     <style>
       #observablehq-header {
@@ -81,7 +82,8 @@ export default {
       
       #observablehq-header nav {
         display: flex;
-        gap: 7rem;
+        flex-wrap: wrap;
+        gap: 1rem;
         align-items: center;
         border-top: 1px solid var(--theme-foreground-faint, #ccc);
         padding-top: 1rem;
@@ -165,6 +167,39 @@ export default {
           });
         });
       });
+      @media (max-width: 768px) {
+
+      .header-top {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+
+      .header-title {
+        font-size: 1.25rem;
+      }
+
+      .header-logo {
+        height: 30px;
+      }
+
+      #observablehq-header nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        padding-top: 0.5rem;
+      }
+
+      #observablehq-header nav a {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.9rem;
+      }
+
+      .observablehq {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+    }
     </script>
   `,
   
