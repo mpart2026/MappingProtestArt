@@ -100,7 +100,6 @@ export default {
           flex-wrap: wrap;
           gap: 0.2rem;
           padding-top: 0.5rem;
-          overflow-y: hidden;
         }
 
         #observablehq-header nav a {
