@@ -117,8 +117,8 @@ Plot.plot({
 <div class="analysis-panel">
 <h4>Geographic distribution</h4>
 <p>This map shows where artworks in the collection originate, colored by theme. Use the decade selector above to explore how geographic spread has shifted over time.</p>
-<p>Dense clusters indicate cultural hubs or periods of concentrated production. Isolated dots may reflect rare surviving works or limited documentation from that region.</p>
-<p>Hover any dot for title, creator, date, and medium.</p>
+<p>Dense clusters indicate cultural hubs or periods of concentrated production. Isolated dots may reflect rare surviving works in areas of limited artistic freedom.</p>
+<p>Hover any dot for title, creator, location, and medium.</p>
 </div>
 </div>
 
@@ -180,7 +180,7 @@ Plot.plot({
 <div class="analysis-panel">
 <h4>Theme breakdown</h4>
 <p>Each cell represents one theme, sized equally but shaded by count. Darker cells indicate themes with more artworks in the collection.</p>
-<p>Dominant themes may reflect curatorial bias, historical abundance of surviving works, or the dataset's collection scope rather than the true historical distribution of subjects.</p>
+<p>Dominant themes may reflect global struggles or the dataset's limited scope rather than the true historical distribution of subjects.</p>
 <p>Hover a cell for the exact count and percentage.</p>
 </div>
 </div>
@@ -249,8 +249,8 @@ Plot.plot({
 </div>
 <div class="analysis-panel">
 <h4>Spatial context</h4>
-<p>This chart ranks artworks by the type of space they were created for or displayed in. The distribution reveals the collection's institutional and architectural bias.</p>
-<p>A strong showing for public or religious spaces may indicate that large-scale commissioned works are better preserved historically. Private or domestic works are often underrepresented in collections.</p>
+<p>This chart ranks artworks by the type of space they were displayed in. The distribution reveals the collection's reach and potential impact.</p>
+<p>A strong showing for public spaces may indicate that works with greater visibility and social impact are better preserved historically. </p>
 </div>
 </div>
 
@@ -286,20 +286,28 @@ const maxCount = d3.max(cellData, d => d.count);
 <div>
 
 ```js
+const filteredCells = cellData.filter(d => d.count >= 2);
+const activeThemes = [...new Set(filteredCells.map(d => d.theme))].sort();
+const activeTags   = [...new Set(filteredCells.map(d => d.tag))].sort();
+```
+
+```js
 Plot.plot({
   title: "Theme × Visual Tag co-occurrence",
   width: 580,
-  height: 80 + tags.length * 22,
+  height: 80 + activeTags.length * 22,
   marginLeft: 160,
   marginBottom: 120,
   x: {
     label: null,
     tickRotate: -45,
-    domain: themes
+    domain: activeThemes,
+    padding: 0
   },
   y: {
     label: null,
-    domain: tags
+    domain: activeTags,
+    padding: 0
   },
   color: {
     type: "sequential",
@@ -309,22 +317,25 @@ Plot.plot({
     label: "Co-occurrences"
   },
   marks: [
-    Plot.cell(cellData, {
+    Plot.cell(filteredCells, {
       x: "theme",
       y: "tag",
       fill: "count",
+      inset: 0.5,
+      stroke: "white",
       inset: 1,
       tip: true,
       title: d => `${d.theme} × ${d.tag}\n${d.count} artwork${d.count !== 1 ? "s" : ""}`
     }),
-    Plot.text(cellData.filter(d => d.count > 0), {
+    Plot.text(filteredCells, {
       x: "theme",
       y: "tag",
       text: d => d.count,
       fill: d => d.count > maxCount * 0.6 ? "white" : "#333",
       fontSize: 10,
       fontWeight: "bold"
-    })
+    }),
+    Plot.frame()
   ]
 })
 ```
@@ -332,7 +343,7 @@ Plot.plot({
 </div>
 <div class="analysis-panel">
 <h4>Theme–tag co-occurrence</h4>
-<p>Each cell shows how often a visual tag appears alongside a given theme. Darker red indicates stronger co-occurrence — a visual vocabulary strongly associated with that theme.</p>
+<p>The display features true co-occurrences i.e when the count is more than one. Each cell shows how often a visual tag appears alongside a given theme. Darker red indicates stronger co-occurrence — a visual vocabulary strongly associated with that theme.</p>
 <p>Rows with many warm cells belong to tags that cut across themes, suggesting universal visual motifs. Sparse rows indicate niche or theme-specific imagery.</p>
 <p>Blank cells (zero co-occurrences) reveal combinations that don't exist in the collection, which can be as revealing as the clusters.</p>
 </div>

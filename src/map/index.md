@@ -222,7 +222,7 @@ function updateMap() {
         ${row.Year ? `<p style="margin: 0;"><strong>Year:</strong> ${row.Year}</p>` : ''}
         ${row.Medium ? `<p style="margin: 0;"><strong>Medium:</strong> ${row.Medium}</p>` : ''}
         ${row.Theme ? `<p style="margin: 0;"><strong>Theme:</strong> ${row.Theme}</p>` : ''}
-        ${row.Country ? `<p style="margin: 0;"><strong>Country:</strong> ${row.Country}</p>` : ''}
+        ${(row.Location || row.Country) ? `<p style="margin: 0;"><strong>Location:</strong> ${[row.Location, row.Country].filter(Boolean).join(', ')}</p>` : ''}
         ${row.Description ? `<p style="margin: 0;">${row.Description}</p>` : ''}
         ${row['Visualtags'] ? `<p style="margin: 0;"><strong>Tags:</strong> ${row['Visualtags']}</p>` : ''}
         ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" target="_blank">More Info</a></p>` : ''}
