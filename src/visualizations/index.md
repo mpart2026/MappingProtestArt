@@ -4,25 +4,56 @@ toc: false
 ---
 
 <style>
-.viz-row {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 1.5rem;
-  align-items: start;
+.viz-container {
+  position: relative;
+  width: 100%;
   margin-bottom: 3rem;
 }
-.analysis-panel {
+
+.info-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #d0cdc6;
+  color: #444;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  z-index: 10;
+}
+
+.info-tooltip {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 320px;
+  max-width: 90vw;
   background: #f8f7f4;
-  border-left: 3px solid #d0cdc6;
+  border: 1px solid #d0cdc6;
   border-radius: 6px;
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   font-size: 0.875rem;
   line-height: 1.6;
   color: #444;
-  position: sticky;
-  top: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  z-index: 100;
 }
-.analysis-panel h4 {
+
+.info-button:hover + .info-tooltip,
+.info-tooltip:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.info-tooltip h4 {
   margin: 0 0 0.5rem;
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -30,10 +61,8 @@ toc: false
   color: #888;
   font-weight: 600;
 }
-.analysis-panel p {
-  margin: 0 0 0.75rem;
-}
-.analysis-panel p:last-child {
+
+.info-tooltip p:last-child {
   margin-bottom: 0;
 }
 </style>
@@ -72,13 +101,21 @@ const selectedDecade = view(Inputs.select(
 ));
 ```
 
-<div class="viz-row">
-<div>
+<div class="viz-container">
+<button class="info-button"><i>i</i></button>
+
+<div class="info-tooltip">
+<h4>Geographic distribution</h4>
+<p>This map shows where artworks in the collection originate, colored by theme. Use the decade selector above to explore how geographic spread has shifted over time.</p>
+<p>Dense clusters indicate cultural hubs or periods of concentrated production. Isolated dots may reflect rare surviving works in areas of limited artistic freedom.</p>
+<p>Hover any dot for title, creator, location, and medium.</p>
+</div>
+</div>
 
 ```js
 Plot.plot({
   title: selectedDecade === null ? "All Artworks" : `Artworks from the ${selectedDecade}s`,
-  width: 580,
+  width: width,
   height: 420,
   projection: "equirectangular",
   marks: [
@@ -112,17 +149,19 @@ Plot.plot({
   }
 })
 ```
-
-</div>
-<div class="analysis-panel">
-<h4>Geographic distribution</h4>
-<p>This map shows where artworks in the collection originate, colored by theme. Use the decade selector above to explore how geographic spread has shifted over time.</p>
-<p>Dense clusters indicate cultural hubs or periods of concentrated production. Isolated dots may reflect rare surviving works in areas of limited artistic freedom.</p>
-<p>Hover any dot for title, creator, location, and medium.</p>
-</div>
 </div>
 
----
+
+<div class="viz-container">
+<button class="info-button"><i>i</i></button>
+
+<div class="info-tooltip">
+<h4>Theme breakdown</h4>
+<p>Each cell represents one theme, sized equally but shaded by count. Darker cells indicate themes with more artworks in the collection.</p>
+<p>Dominant themes may reflect global struggles or the dataset's limited scope rather than the true historical distribution of subjects.</p>
+<p>Hover a cell for the exact count and percentage.</p>
+</div>
+</div>
 
 ```js
 const themeCounts = d3.rollup(
@@ -139,14 +178,12 @@ const themeData = Array.from(themeCounts, ([theme, count]) => ({
 const total = d3.sum(themeData, d => d.count);
 ```
 
-<div class="viz-row">
-<div>
 
 ```js
 Plot.plot({
   title: "Artwork Themes (Grid View)",
-  width: 580,
-  height: 380,
+  width: width,
+  height: 420,
   axis: null,
   marginTop: 40,
   marks: [
@@ -176,15 +213,6 @@ Plot.plot({
 })
 ```
 
-</div>
-<div class="analysis-panel">
-<h4>Theme breakdown</h4>
-<p>Each cell represents one theme, sized equally but shaded by count. Darker cells indicate themes with more artworks in the collection.</p>
-<p>Dominant themes may reflect global struggles or the dataset's limited scope rather than the true historical distribution of subjects.</p>
-<p>Hover a cell for the exact count and percentage.</p>
-</div>
-</div>
-
 ---
 
 ```js
@@ -202,13 +230,20 @@ const spaceDescData = Array.from(spaceDescCounts, ([spaceDesc, count]) => ({
 const totalSpaceDesc = d3.sum(spaceDescData, d => d.count);
 ```
 
-<div class="viz-row">
-<div>
+<div class="viz-container">
+<button class="info-button"><i>i</i></button>
+
+<div class="info-tooltip">
+<h4>Spatial context</h4>
+<p>This chart ranks artworks by the type of space they were displayed in. The distribution reveals the collection's reach and potential impact.</p>
+<p>A strong showing for public spaces may indicate that works with greater visibility and social impact are better preserved historically.</p>
+</div>
+</div>
 
 ```js
 Plot.plot({
   title: "Artworks by Space Description",
-  width: 580,
+  width: width,
   height: 380,
   marginLeft: 150,
   marginBottom: 60,
@@ -246,13 +281,6 @@ Plot.plot({
 })
 ```
 
-</div>
-<div class="analysis-panel">
-<h4>Spatial context</h4>
-<p>This chart ranks artworks by the type of space they were displayed in. The distribution reveals the collection's reach and potential impact.</p>
-<p>A strong showing for public spaces may indicate that works with greater visibility and social impact are better preserved historically. </p>
-</div>
-</div>
 
 ---
 
@@ -282,8 +310,16 @@ const cellData = themes.flatMap(theme =>
 const maxCount = d3.max(cellData, d => d.count);
 ```
 
-<div class="viz-row">
-<div>
+<div class="viz-container">
+<button class="info-button"><i>i</i></button>
+
+<div class="info-tooltip">
+<h4>Theme–tag co-occurrence</h4>
+<p>The display features true co-occurrences (count greater than one). Each cell shows how often a visual tag appears alongside a given theme.</p>
+<p>Darker red indicates stronger co-occurrence and a visual vocabulary strongly associated with that theme.</p>
+<p>Blank cells reveal combinations that do not occur in the collection.</p>
+</div>
+</div>
 
 ```js
 const filteredCells = cellData.filter(d => d.count >= 2);
@@ -294,7 +330,7 @@ const activeTags   = [...new Set(filteredCells.map(d => d.tag))].sort();
 ```js
 Plot.plot({
   title: "Theme × Visual Tag co-occurrence",
-  width: 580,
+  width: width,
   height: 80 + activeTags.length * 22,
   marginLeft: 160,
   marginBottom: 120,
@@ -347,12 +383,3 @@ Plot.plot({
   ]
 })
 ```
-
-</div>
-<div class="analysis-panel">
-<h4>Theme–tag co-occurrence</h4>
-<p>The display features true co-occurrences i.e when the count is more than one. Each cell shows how often a visual tag appears alongside a given theme. Darker red indicates stronger co-occurrence — a visual vocabulary strongly associated with that theme.</p>
-<p>Rows with many warm cells belong to tags that cut across themes, suggesting universal visual motifs. Sparse rows indicate niche or theme-specific imagery.</p>
-<p>Blank cells (zero co-occurrences) reveal combinations that don't exist in the collection, which can be as revealing as the clusters.</p>
-</div>
-</div>
