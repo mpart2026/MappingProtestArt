@@ -19,10 +19,10 @@ toc: false
   border-radius: 50%;
   border: none;
   background: #d0cdc6;
-  color: #444;
+  color: #0f0f0f;
   font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   z-index: 10;
 }
 
