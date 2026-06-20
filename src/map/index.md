@@ -122,10 +122,21 @@ function createFilterSection(labelText, tags, getActive, onAllClick, onTagClick)
   return section;
 }
 
-// --- Visual tag section (rebuilt dynamically) ---
-let visualTagSection = null;
+// --- Visual tag section (rebuilt dynamically, only shown once a theme is selected) ---
+const visualTagWrapper = document.createElement("div");
 
 function buildVisualTagSection() {
+  // Clear out whatever was there before
+  visualTagWrapper.innerHTML = "";
+
+  // Hide entirely until a theme has been chosen
+  if (activeTheme === null) {
+    visualTagWrapper.style.display = "none";
+    return;
+  }
+
+  visualTagWrapper.style.display = "block";
+
   const relevantTags = getRelevantVisualTags();
 
   const section = createFilterSection(
@@ -136,11 +147,7 @@ function buildVisualTagSection() {
     (tag) => { activeVisualTag = tag; }
   );
 
-  if (visualTagSection && visualTagSection.parentNode) {
-    visualTagSection.parentNode.replaceChild(section, visualTagSection);
-  }
-  visualTagSection = section;
-  return section;
+  visualTagWrapper.appendChild(section);
 }
 
 // --- Theme filter section ---
@@ -168,9 +175,9 @@ container.style.height = "600px";
 container.style.marginBottom = "1rem";
 mainContainer.appendChild(container);
 
-// Build initial visual tag section and append
-visualTagSection = buildVisualTagSection();
-mainContainer.appendChild(visualTagSection);
+// Build initial visual tag section (hidden by default, no theme selected yet) and append
+buildVisualTagSection();
+mainContainer.appendChild(visualTagWrapper);
 
 // Load custom icon
 const iconUrl = await FileAttachment("../img/marker-icon.png").url();
