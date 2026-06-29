@@ -205,6 +205,34 @@ export default {
         background: var(--theme-foreground-faintest, #f5f5f5);
       }
 
+      .site-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #d0cdc6;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .footer-logo {
+    height: 32px;
+  }
+}
 
     </style>
 
@@ -283,6 +311,13 @@ export default {
     </nav>
   `,
   
+  footer: `
+  <footer class="site-footer">
+    <img src="img/gc-logo.jpg" alt="CUNY Graduate Center" class="footer-logo">
+    <span>© 2026 Mapping Protest Art</span>
+  </footer>
+`,
+
   pager: false,
   toc: false,
 };

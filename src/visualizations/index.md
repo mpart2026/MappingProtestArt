@@ -67,7 +67,11 @@ toc: false
 }
 </style>
 
-## Visualizations
+## Visualizations 
+
+<br>
+
+## World Map by Decade
 
 ```js
 import * as topojson from "npm:topojson-client";
@@ -149,8 +153,8 @@ Plot.plot({
   }
 })
 ```
-</div>
 
+---
 
 <div class="viz-container">
 <button class="info-button"><i>i</i></button>

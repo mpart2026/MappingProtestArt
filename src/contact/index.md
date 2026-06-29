@@ -12,14 +12,13 @@ toc: false
 </style>
 <div class="content-wrapper", style="max-width: 100%; width: 90%;">
 
-## About MPA
+<h2> About MPA </h2>
 
-Mapping Protest Art is the capstone project created to fulfil the requirement for my M.A in Digital Humanities.
+Mapping Protest Art seeks to illuminate the global language of resistance through creative expression by allowing the viewer to access different forms of protest. The project transforms individual acts of dissent into a collective narrative of resilience by charting how communities worldwide have used art to challenge injustice, defend their rights, and mobilize social change.
 
-## About MPA Data
+<h2>About MPA Data </h2>
 
 Data was gathered by researching online sources as well as scholarship published on protest art over the past decade. Data collection efforts were focused on art created from the twentieth century till date. The published sources are listed below. 
-
 <details style="margin-top: 2rem; width: 100%; max-width: none;">
   <summary style="cursor: pointer; font-size: 1.2rem; font-weight: bold; padding: 1rem; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd;">
     📚 View Sources
@@ -107,10 +106,28 @@ display(html`
 
 <br>
 
-## Contact Us
+<h2> How to Use the Site </h2>
+There is no single way to explore the site. The following suggestions may help you navigate the collection:
+
+* Browse the map by theme to discover artworks related to specific social, political, and cultural issues.
+* Refine your search by applying a Visual Tag filter after selecting a theme using the browse window that appears below the map.
+* Click on a map marker to view details about an artwork, including its creator, location, and contextual information.
+* Explore the collection in list form, where artworks can be browsed by theme and sorted by title, creator, or year of creation.
+* View data visualizations to gain insight into patterns within the collection. Interpretive notes are available through the Info button in the upper-right corner, though visitors are encouraged to draw their own conclusions from the data.
+
+
 </br>
+<h2> Contact Us </h2>
 Contribute an item to the collection.</br>
 Do you know of protest art that you believe should be part of the collection?</br>
 Send us the details: Creator name, artwork title, country of origin, URLs with more information.</br>
-Email us at mpart2026@gmail.com
+Email us at mpart2026@gmail.com <br>
+
+</br>
+<h2> About the Creator </h2>
+
+My name is L Radhakrishnan. I am a student at CUNY GC and I created Mapping Protest Art as the capstone project to fulfil the final requirement for my M.A in Digital Humanities.
+
+I have a background in art having completed the Masters and Doctoral program at Rugters in Art History. Hence the decision to showcase art as the mainstay of the project's objective.
+
 </div>
