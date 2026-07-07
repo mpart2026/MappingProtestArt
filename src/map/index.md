@@ -65,6 +65,12 @@ toc: false
 .info-tooltip p:last-child {
   margin-bottom: 0;
 }
+
+.popup-scroll {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
 </style>
 
 <div class="map-container">
@@ -103,7 +109,7 @@ mainContainer.style.margin = "0 auto";
 mainContainer.style.padding = "0 2rem";
 mainContainer.style.width = "100%";
 
-// Helper: get visual tags relevant to current theme (or all if no theme selected)
+// Get visual tags relevant to current theme (or all if no theme selected)
 function getRelevantVisualTags() {
   const subset = activeTheme !== null
     ? data.filter(row => row.Theme === activeTheme)
@@ -114,7 +120,7 @@ function getRelevantVisualTags() {
   return [...new Set(all)].sort();
 }
 
-// Helper: create a filter section with tags
+// Create a filter section with tags
 function createFilterSection(labelText, tags, getActive, onAllClick, onTagClick) {
   const section = document.createElement("div");
   section.style.marginBottom = "1rem";
@@ -261,7 +267,7 @@ const customIcon = L.icon({
   iconUrl: iconUrl,
   iconSize: [20, 23],
   iconAnchor: [12, 31],
-  popupAnchor: [1, -34]
+  popupAnchor: [0, -34]
 });
 
 // Initialize map
@@ -298,17 +304,19 @@ function updateMap() {
     if (isNaN(lat) || isNaN(lng)) return;
 
     const popupContent = `
-      <div style="max-width: 300px;">
-        <h3 style="margin-top: 0;">${row.Title || 'Untitled'}</h3>
-        ${row.Creator ? `<p style="margin: 0;"><strong>Creator:</strong> ${row.Creator}</p>` : ''}
-        ${row['Creation Year'] ? `<p style="margin: 0;"><strong>Year:</strong> ${row['Creation Year']}</p>` : ''}
-        ${row.Year ? `<p style="margin: 0;"><strong>Year:</strong> ${row.Year}</p>` : ''}
-        ${row.Medium ? `<p style="margin: 0;"><strong>Medium:</strong> ${row.Medium}</p>` : ''}
-        ${row.Theme ? `<p style="margin: 0;"><strong>Theme:</strong> ${row.Theme}</p>` : ''}
-        ${(row.Location || row.Country) ? `<p style="margin: 0;"><strong>Location:</strong> ${[row.Location, row.Country].filter(Boolean).join(', ')}</p>` : ''}
-        ${row.Description ? `<p style="margin: 0;">${row.Description}</p>` : ''}
-        ${row['Visualtags'] ? `<p style="margin: 0;"><strong>Tags:</strong> ${row['Visualtags']}</p>` : ''}
-        ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" target="_blank">More Info</a></p>` : ''}
+      <div class="popup-scroll">
+        <div style="max-width: 300px; padding-top:12px;">
+          <h3 style="margin-top: 0;">${row.Title || 'Untitled'}</h3>
+          ${row.Creator ? `<p style="margin: 0;"><strong>Creator:</strong> ${row.Creator}</p>` : ''}
+          ${row['Creation Year'] ? `<p style="margin: 0;"><strong>Year:</strong> ${row['Creation Year']}</p>` : ''}
+          ${row.Year ? `<p style="margin: 0;"><strong>Year:</strong> ${row.Year}</p>` : ''}
+          ${row.Medium ? `<p style="margin: 0;"><strong>Medium:</strong> ${row.Medium}</p>` : ''}
+          ${row.Theme ? `<p style="margin: 0;"><strong>Theme:</strong> ${row.Theme}</p>` : ''}
+          ${(row.Location || row.Country) ? `<p style="margin: 0;"><strong>Location:</strong> ${[row.Location, row.Country].filter(Boolean).join(', ')}</p>` : ''}
+          ${row.Description ? `<p style="margin: 0;">${row.Description}</p>` : ''}
+          ${row['Visualtags'] ? `<p style="margin: 0;"><strong>Tags:</strong> ${row['Visualtags']}</p>` : ''}
+          ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" target="_blank">More Info</a></p>` : ''}
+        </div>
       </div>
     `;
 
