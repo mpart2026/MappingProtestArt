@@ -14,7 +14,7 @@ toc: false
 
 <h2> About MPA </h2>
 
-Mapping Protest Art seeks to illuminate the global language of resistance through creative expression by allowing the viewer to access different forms of protest. The project transforms individual acts of dissent into a collective narrative of resilience by charting how communities worldwide have used art to challenge injustice, defend their rights, and mobilize social change.
+Mapping Protest Art seeks to illuminate the global language of resistance through creative expression by allowing the viewer to access different forms of protest. The project transforms individual acts of civic dissent into a collective narrative of resilience by charting how communities worldwide have used art to challenge injustice, defend their rights, and mobilize social change.
 
 <h2>About MPA Data </h2>
 
@@ -118,9 +118,9 @@ There is no single way to explore the site. The following suggestions may help y
 
 </br>
 <h2> Contact Us </h2>
-Contribute an item to the collection.</br>
+We invite viewers to participate and contribute items to expand the collection.</br>
 Do you know of protest art that you believe should be part of the collection?</br>
-Send us the details: Creator name, artwork title, country of origin, URLs with more information.</br>
+Send us details about the item(s): Creator name, artwork title, country of origin, URLs with more information.</br>
 Email us at mpart2026@gmail.com <br>
 
 </br>

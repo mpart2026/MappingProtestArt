@@ -2,6 +2,82 @@
 title: "Map"
 toc: false
 ---
+
+<style>
+.map-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.info-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #d0cdc6;
+  color: #0f0f0f;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.3rem;
+  z-index: 10;
+}
+
+.info-tooltip {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 320px;
+  max-width: 90vw;
+  background: #f8f7f4;
+  border: 1px solid #d0cdc6;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #444;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  z-index: 100;
+}
+
+.info-button:hover + .info-tooltip,
+.info-tooltip:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.info-tooltip h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  font-weight: 600;
+}
+
+.info-tooltip p:last-child {
+  margin-bottom: 0;
+}
+</style>
+
+<div class="map-container">
+<button class="info-button"><i>i</i></button>
+
+<div class="info-tooltip">
+<h4>Map Navigation</h4>
+<p>Browse by theme. </p>
+<p>For selected theme, browse by Visual Tag window available below the map.  </p>
+<p>Click on a map marker to view details about an artwork</p>
+</div>
+</div>
+
 ```js
 import * as L from "https://cdn.skypack.dev/leaflet@1.9.4";
 
