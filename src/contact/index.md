@@ -107,13 +107,11 @@ display(html`
 <br>
 
 <h2> How to Use the Site </h2>
-There is no single way to explore the site. The following suggestions may help you navigate the collection:
+There is no single way to explore the site. The following suggestions should help navigate the collection:
 
-* Browse the map by theme to discover artworks related to specific social, political, and cultural issues.
-* Refine your search by applying a Visual Tag filter after selecting a theme using the browse window that appears below the map.
-* Click on a map marker to view details about an artwork, including its creator, location, and contextual information.
-* Explore the collection in list form, where artworks can be browsed by theme and sorted by title, creator, or year of creation.
-* View data visualizations to gain insight into patterns within the collection. Interpretive notes are available through the Info button in the upper-right corner, though visitors are encouraged to draw their own conclusions from the data.
+* <b>Map</b>: Browse by theme to discover artworks related to specific social, political, and cultural issues. Refine your search by applying a Visual Tag filter after selecting a theme. Click on a map marker to view details about an artwork.
+* <b>Collection</b>: Explore the collection in list form, where artworks can be browsed by theme and sorted by title, creator, or year of creation.
+* <b>Visualizations</b>: View data visualizations to gain insight into patterns within the collection. Interpretive notes are available through the Info button in the upper-right corner, though visitors are encouraged to draw their own conclusions from the data.
 
 
 </br>

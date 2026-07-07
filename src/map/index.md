@@ -71,6 +71,45 @@ toc: false
   overflow-y: auto;
 }
 
+.filter-box {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.filter-box label {
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  display: block;
+}
+
+.filter-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #0066cc;
+  border-radius: 8px;
+  background-color: white;
+  color: #0066cc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 220px;
+}
+
+.filter-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0,102,204,0.25);
+}
+
+#visual-tag-box {
+  display: none;
+}
+
+#map-container {
+  width: 100%;
+  height: 600px;
+  margin-bottom: 1rem;
+}
 </style>
 
 <div class="map-container">
@@ -78,11 +117,26 @@ toc: false
 
 <div class="info-tooltip">
 <h4>Map Navigation</h4>
-<p>Browse by theme. </p>
-<p>For selected theme, browse by Visual Tag window available below the map.  </p>
+<p>Browse by theme.  For selected theme, browse by Visual Tag </p>
 <p>Click on a map marker to view details about an artwork</p>
 </div>
 </div>
+
+<div class="filter-box">
+  <label for="theme-select">Browse by Theme:</label>
+  <select id="theme-select" class="filter-select">
+    <option value="__all__">All</option>
+  </select>
+</div>
+
+<div class="filter-box" id="visual-tag-box">
+  <label for="tag-select">Browse by Visual Tag:</label>
+  <select id="tag-select" class="filter-select">
+    <option value="__all__">All</option>
+  </select>
+</div>
+
+<div id="map-container"></div>
 
 ```js
 import * as L from "https://cdn.skypack.dev/leaflet@1.9.4";
@@ -97,169 +151,22 @@ const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 
 const themes = [...new Set(data.map(row => row.Theme).filter(Boolean))].sort();
 
-// State variables
-let activeTheme = null;
-let activeVisualTag = null;
+// Grab the HTML elements already defined above
+const themeSelect = document.querySelector("#theme-select");
+const tagSelect = document.querySelector("#tag-select");
+const visualTagBox = document.querySelector("#visual-tag-box");
+const mapContainer = document.querySelector("#map-container");
+
+// Populate the theme dropdown
+themes.forEach(theme => {
+  const opt = document.createElement("option");
+  opt.value = theme;
+  opt.textContent = theme;
+  themeSelect.appendChild(opt);
+});
+
+// State
 let markers = [];
-
-// Create main container
-const mainContainer = display(document.createElement("div"));
-mainContainer.style.maxWidth = "1400px";
-mainContainer.style.margin = "0 auto";
-mainContainer.style.padding = "0 2rem";
-mainContainer.style.width = "100%";
-
-// Get visual tags relevant to current theme (or all if no theme selected)
-function getRelevantVisualTags() {
-  const subset = activeTheme !== null
-    ? data.filter(row => row.Theme === activeTheme)
-    : data;
-  const all = subset.flatMap(row =>
-    row['Visualtags'] ? row['Visualtags'].split(',').map(t => t.trim()).filter(Boolean) : []
-  );
-  return [...new Set(all)].sort();
-}
-
-// Create a filter section with tags
-function createFilterSection(labelText, tags, getActive, onAllClick, onTagClick) {
-  const section = document.createElement("div");
-  section.style.marginBottom = "1rem";
-  section.style.padding = "1rem";
-  section.style.backgroundColor = "#f5f5f5";
-  section.style.borderRadius = "8px";
-
-  const label = document.createElement("div");
-  label.textContent = labelText;
-  label.style.fontWeight = "bold";
-  label.style.marginBottom = "0.75rem";
-  label.style.fontSize = "1rem";
-  section.appendChild(label);
-
-  const tagContainer = document.createElement("div");
-  tagContainer.style.display = "flex";
-  tagContainer.style.flexWrap = "wrap";
-  tagContainer.style.gap = "0.5rem";
-
-  const allTag = document.createElement("button");
-  allTag.textContent = "All";
-  allTag.style.padding = "0.5rem 1rem";
-  allTag.style.border = "1px solid #0066cc";
-  allTag.style.borderRadius = "20px";
-  allTag.style.cursor = "pointer";
-  allTag.style.fontSize = "0.9rem";
-  allTag.style.transition = "all 0.2s";
-  allTag.style.backgroundColor = "#0066cc";
-  allTag.style.color = "white";
-
-  const tagButtons = {};
-
-  function updateStyles() {
-    const active = getActive();
-    allTag.style.backgroundColor = active === null ? "#0066cc" : "white";
-    allTag.style.color = active === null ? "white" : "#0066cc";
-    Object.keys(tagButtons).forEach(key => {
-      tagButtons[key].style.backgroundColor = active === key ? "#0066cc" : "white";
-      tagButtons[key].style.color = active === key ? "white" : "#0066cc";
-    });
-  }
-
-  allTag.addEventListener("click", () => {
-    onAllClick();
-    updateStyles();
-    updateMap();
-  });
-  tagContainer.appendChild(allTag);
-
-  tags.forEach(tag => {
-    const btn = document.createElement("button");
-    btn.textContent = tag;
-    btn.style.padding = "0.5rem 1rem";
-    btn.style.border = "1px solid #0066cc";
-    btn.style.borderRadius = "20px";
-    btn.style.backgroundColor = "white";
-    btn.style.color = "#0066cc";
-    btn.style.cursor = "pointer";
-    btn.style.fontSize = "0.9rem";
-    btn.style.transition = "all 0.2s";
-
-    btn.addEventListener("mouseover", () => {
-      if (getActive() !== tag) btn.style.backgroundColor = "#e6f2ff";
-    });
-    btn.addEventListener("mouseout", () => {
-      if (getActive() !== tag) btn.style.backgroundColor = "white";
-    });
-    btn.addEventListener("click", () => {
-      onTagClick(tag);
-      updateStyles();
-      updateMap();
-    });
-
-    tagButtons[tag] = btn;
-    tagContainer.appendChild(btn);
-  });
-
-  section.appendChild(tagContainer);
-  section._updateStyles = updateStyles;
-
-  return section;
-}
-
-// --- Visual tag section (rebuilt dynamically, only shown once a theme is selected) ---
-const visualTagWrapper = document.createElement("div");
-
-function buildVisualTagSection() {
-  // Clear out whatever was there before
-  visualTagWrapper.innerHTML = "";
-
-  // Hide entirely until a theme has been chosen
-  if (activeTheme === null) {
-    visualTagWrapper.style.display = "none";
-    return;
-  }
-
-  visualTagWrapper.style.display = "block";
-
-  const relevantTags = getRelevantVisualTags();
-
-  const section = createFilterSection(
-    "Browse by Visual Tag:",
-    relevantTags,
-    () => activeVisualTag,
-    () => { activeVisualTag = null; },
-    (tag) => { activeVisualTag = tag; }
-  );
-
-  visualTagWrapper.appendChild(section);
-}
-
-// --- Theme filter section ---
-const themeSection = createFilterSection(
-  "Browse by Theme:",
-  themes,
-  () => activeTheme,
-  () => {
-    activeTheme = null;
-    activeVisualTag = null;  // reset tag when theme cleared
-    buildVisualTagSection();
-  },
-  (tag) => {
-    activeTheme = tag;
-    activeVisualTag = null;  // reset tag when theme changes
-    buildVisualTagSection();
-  }
-);
-mainContainer.appendChild(themeSection);
-
-// Map container
-const container = document.createElement("div");
-container.style.width = "100%";
-container.style.height = "600px";
-container.style.marginBottom = "1rem";
-mainContainer.appendChild(container);
-
-// Build initial visual tag section (hidden by default, no theme selected yet) and append
-buildVisualTagSection();
-mainContainer.appendChild(visualTagWrapper);
 
 // Load custom icon
 const iconUrl = await FileAttachment("../img/marker-icon.png").url();
@@ -271,7 +178,7 @@ const customIcon = L.icon({
 });
 
 // Initialize map
-const map = L.map(container, {
+const map = L.map(mapContainer, {
   worldCopyJump: false,
   maxBounds: [[-90, -180], [90, 180]],
   maxBoundsViscosity: 1.0,
@@ -283,18 +190,49 @@ L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
   maxZoom: 18
 }).addTo(map);
 
+// Rebuild the visual tag dropdown options based on the current theme selection
+function refreshTagOptions() {
+  const activeTheme = themeSelect.value;
+
+  const subset = activeTheme === "__all__"
+    ? data
+    : data.filter(row => row.Theme === activeTheme);
+
+  const allTags = subset.flatMap(row =>
+    row['Visualtags'] ? row['Visualtags'].split(',').map(t => t.trim()).filter(Boolean) : []
+  );
+  const uniqueTags = [...new Set(allTags)].sort();
+
+  // Clear existing options except "All"
+  tagSelect.innerHTML = '<option value="__all__">All</option>';
+  uniqueTags.forEach(tag => {
+    const opt = document.createElement("option");
+    opt.value = tag;
+    opt.textContent = tag;
+    tagSelect.appendChild(opt);
+  });
+
+  // Show/hide the visual tag box depending on whether a theme is selected
+  visualTagBox.style.display = activeTheme === "__all__" ? "none" : "block";
+  tagSelect.value = "__all__";
+}
+
+// Redraw markers on the map based on current filter selections
 function updateMap() {
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
 
+  const activeTheme = themeSelect.value;
+  const activeTag = tagSelect.value;
+
   let filteredData = data;
-  if (activeTheme !== null) {
+  if (activeTheme !== "__all__") {
     filteredData = filteredData.filter(row => row.Theme === activeTheme);
   }
-  if (activeVisualTag !== null) {
+  if (activeTag !== "__all__") {
     filteredData = filteredData.filter(row => {
       const tags = row['Visualtags'] ? row['Visualtags'].split(',').map(t => t.trim()) : [];
-      return tags.includes(activeVisualTag);
+      return tags.includes(activeTag);
     });
   }
 
@@ -335,5 +273,17 @@ function updateMap() {
   }
 }
 
+// Wire up event listeners directly
+themeSelect.addEventListener("change", () => {
+  refreshTagOptions();
+  updateMap();
+});
+
+tagSelect.addEventListener("change", () => {
+  updateMap();
+});
+
+// Initial render
+refreshTagOptions();
 updateMap();
 ```
