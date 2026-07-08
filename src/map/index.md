@@ -8,6 +8,7 @@ toc: false
   position: relative;
   width: 100%;
   margin-bottom: 3rem;
+  z-index: 100;
 }
 
 .info-button {
@@ -23,7 +24,7 @@ toc: false
   font-weight: bold;
   cursor: pointer;
   font-size: 1.3rem;
-  z-index: 10;
+  z-index: 100;
 }
 
 .info-tooltip {
@@ -40,7 +41,6 @@ toc: false
   line-height: 1.6;
   color: #444;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease;
@@ -71,34 +71,33 @@ toc: false
   overflow-y: auto;
 }
 
-.filter-box {
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
   margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-box {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
 }
 
 .filter-box label {
   font-weight: bold;
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
-  display: block;
+  margin-right: 12px;
+  white-space: nowrap;
 }
 
 .filter-select {
-  padding: 0.5rem 1rem;
+  width: 220px;
+  padding: .5rem .75rem;
   border: 1px solid #0066cc;
   border-radius: 8px;
-  background-color: white;
+  background: white;
   color: #0066cc;
-  font-size: 0.9rem;
-  cursor: pointer;
-  min-width: 220px;
-}
-
-.filter-select:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0,102,204,0.25);
 }
 
 #visual-tag-box {
@@ -109,20 +108,23 @@ toc: false
   width: 100%;
   height: 600px;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
+
 </style>
 
 <div class="map-container">
-<button class="info-button"><i>i</i></button>
+  <button class="info-button"><i>i</i></button>
 
-<div class="info-tooltip">
-<h4>Map Navigation</h4>
-<p>Browse by theme.  For selected theme, browse by Visual Tag </p>
-<p>Click on a map marker to view details about an artwork</p>
-</div>
+  <div class="info-tooltip">
+  <h4>Map Navigation</h4>
+  <p>Browse by theme.  For selected theme, browse by Visual Tag. Click on a map marker to view details about an artwork</p>
+  </div>
+  <div id="map-container"></div>
 </div>
 
-<div class="filter-box">
+<!-- <div class="filter-box">
   <label for="theme-select">Browse by Theme:</label>
   <select id="theme-select" class="filter-select">
     <option value="__all__">All</option>
@@ -134,9 +136,7 @@ toc: false
   <select id="tag-select" class="filter-select">
     <option value="__all__">All</option>
   </select>
-</div>
-
-<div id="map-container"></div>
+</div> -->
 
 ```js
 import * as L from "https://cdn.skypack.dev/leaflet@1.9.4";
@@ -152,10 +152,58 @@ const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 const themes = [...new Set(data.map(row => row.Theme).filter(Boolean))].sort();
 
 // Grab the HTML elements already defined above
-const themeSelect = document.querySelector("#theme-select");
-const tagSelect = document.querySelector("#tag-select");
-const visualTagBox = document.querySelector("#visual-tag-box");
+// const themeSelect = document.querySelector("#theme-select");
+// const tagSelect = document.querySelector("#tag-select");
+// const visualTagBox = document.querySelector("#visual-tag-box");
+// const mapContainer = document.querySelector("#map-container");
+
 const mapContainer = document.querySelector("#map-container");
+
+// Create filter row
+const filterRow = document.createElement("div");
+filterRow.className = "filter-row";
+
+// Theme box
+const themeBox = document.createElement("div");
+themeBox.className = "filter-box";
+
+const themeLabel = document.createElement("label");
+themeLabel.textContent = "Browse by Theme:";
+themeLabel.htmlFor = "theme-select";
+
+const themeSelect = document.createElement("select");
+themeSelect.id = "theme-select";
+themeSelect.className = "filter-select";
+
+themeSelect.innerHTML = `
+<option value="__all__">All</option>
+`;
+
+// Visual Tag box
+const visualTagBox = document.createElement("div");
+visualTagBox.className = "filter-box";
+visualTagBox.id = "visual-tag-box";
+visualTagBox.style.display = "none";
+
+const tagLabel = document.createElement("label");
+tagLabel.textContent = "Browse by Visual Tag:";
+tagLabel.htmlFor = "tag-select";
+
+const tagSelect = document.createElement("select");
+tagSelect.id = "tag-select";
+tagSelect.className = "filter-select";
+
+tagSelect.innerHTML = `
+<option value="__all__">All</option>
+`;
+
+themeBox.append(themeLabel, themeSelect);
+visualTagBox.append(tagLabel, tagSelect);
+
+filterRow.append(themeBox, visualTagBox);
+
+// Insert filters immediately before the map
+mapContainer.parentNode.insertBefore(filterRow, mapContainer);
 
 // Populate the theme dropdown
 themes.forEach(theme => {
