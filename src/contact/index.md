@@ -126,6 +126,6 @@ Email us at mpart2026@gmail.com <br>
 
 My name is L Radhakrishnan. I am a student at CUNY GC and I created Mapping Protest Art as the capstone project to fulfil the final requirement for my M.A in Digital Humanities.
 
-I have a background in art having completed the Masters and Doctoral program at Rugters in Art History. Hence the decision to showcase art as the mainstay of the project's objective.
+I have a background in art having completed the Masters and Doctoral program at Rugters in Art History. Hence the decision to make art the cornerstone of the project.
 
 </div>
