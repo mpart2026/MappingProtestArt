@@ -111,8 +111,8 @@ const selectedDecade = view(Inputs.select(
 <div class="info-tooltip">
 <h4>Geographic distribution</h4>
 <p>This map shows where artworks in the collection originate, colored by theme. Use the decade selector above to explore how geographic spread has shifted over time.</p>
-<p>Dense clusters indicate cultural hubs or periods of concentrated production. Isolated dots may reflect rare surviving works in areas of limited artistic freedom.</p>
-<p>Hover any dot for title, creator, location, and medium.</p>
+<p>Dense clusters indicate periods of concentrated production. Isolated dots may reflect rare surviving works in areas of limited artistic freedom.</p>
+<p>Hover over the dots for title, creator, location, and medium.</p>
 </div>
 </div>
 
@@ -162,8 +162,8 @@ Plot.plot({
 <div class="info-tooltip">
 <h4>Theme breakdown</h4>
 <p>Each cell represents one theme, sized equally but shaded by count. Darker cells indicate themes with more artworks in the collection.</p>
-<p>Dominant themes may reflect global struggles or the dataset's limited scope rather than the true historical distribution of subjects.</p>
-<p>Hover a cell for the exact count and percentage.</p>
+<p>Dominant themes may reflect global struggles or the dataset's limited scope rather than the true historical distribution of subjects. Political activism is the most represented theme followed by feminism and racial discrimination registering a strong showing of civic dissent and struggles against gender as well as racial inequity.</p>
+<p>Hover over a cell for the exact count and percentage.</p>
 </div>
 </div>
 
@@ -240,7 +240,7 @@ const totalSpaceDesc = d3.sum(spaceDescData, d => d.count);
 <div class="info-tooltip">
 <h4>Spatial context</h4>
 <p>This chart ranks artworks by the type of space they were displayed in. The distribution reveals the collection's reach and potential impact.</p>
-<p>A strong showing for public spaces may indicate that works with greater visibility and social impact are better preserved historically.</p>
+<p>The strong representation of public spaces likely reflects the genre's reliance on accessible, highly visible settings to amplify the capacity for critical social engagement.</p>
 </div>
 </div>
 
@@ -320,7 +320,7 @@ const maxCount = d3.max(cellData, d => d.count);
 <div class="info-tooltip">
 <h4>Theme–tag co-occurrence</h4>
 <p>The display features true co-occurrences (count greater than one). Each cell shows how often a visual tag appears alongside a given theme.</p>
-<p>Darker red indicates stronger co-occurrence and a visual vocabulary strongly associated with that theme.</p>
+<p>Darker red indicates stronger co-occurrence and a visual vocabulary strongly associated with that theme. Strongest co-occurences seen in the combination of environment and pollution as well as feminism and gender violence. </p>
 <p>Blank cells reveal combinations that do not occur in the collection.</p>
 </div>
 </div>
