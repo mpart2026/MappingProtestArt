@@ -203,14 +203,14 @@ Plot.plot({
       x: (d, i) => i % 4,
       y: (d, i) => Math.floor(i / 4),
       text: d => `${d.theme}\n${d.count}`,
-      fill: "white",
+      fill: "red",
       fontWeight: "bold",
       fontSize: 11,
       lineWidth: 10
     })
   ],
   color: {
-    scheme: "tableau10",
+    scheme: "blues",
     legend: true,
     label: "Number of Artworks"
   }
