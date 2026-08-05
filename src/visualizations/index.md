@@ -74,6 +74,8 @@ toc: false
 ## World Map by Decade
 
 ```js
+// Create plot for map by decade
+
 import * as topojson from "npm:topojson-client";
 
 const world = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
@@ -104,6 +106,7 @@ const selectedDecade = view(Inputs.select(
   {label: "Select Decade", value: null, format: d => d === null ? "All" : String(d)}
 ));
 ```
+<!-- Text for info button  -->
 
 <div class="viz-container">
 <button class="info-button"><i>i</i></button>
@@ -117,10 +120,10 @@ const selectedDecade = view(Inputs.select(
 </div>
 
 ```js
-Plot.plot({
+const plot = Plot.plot({
   title: selectedDecade === null ? "All Artworks" : `Artworks from the ${selectedDecade}s`,
-  width: width,
-  height: 420,
+  width: 1100,
+  height: 600,
   projection: "equirectangular",
   marks: [
     Plot.geo(land, {fill: "#e0e0e0", stroke: "white", strokeWidth: 0.5}),
@@ -142,19 +145,29 @@ Plot.plot({
       fontSize: 14,
       fontWeight: "bold",
       fill: "#333",
-      dx: -20,
-      dy: 20
+      dx: 0,
+      dy: 5
     })
   ],
   color: {
-    legend: true,
     scheme: "tableau10",
     label: "Theme"
   }
-})
+});
+
+const legend = Plot.legend({
+  color: plot.scale("color"),
+  columns: 1,
+  swatchSize: 14,
+  fontSize: 12
+});
+
+display(htl.html`<div style="display:flex;align-items:center;gap:12px">${plot}${legend}</div>`);
 ```
 
 ---
+
+<!-- Text for info button of theme plot -->
 
 <div class="viz-container">
 <button class="info-button"><i>i</i></button>
@@ -166,6 +179,8 @@ Plot.plot({
 <p>Hover over a cell for the exact count and percentage.</p>
 </div>
 </div>
+
+<!-- Builds a frequency table of artworks grouped by Theme -->
 
 ```js
 const themeCounts = d3.rollup(
@@ -182,6 +197,7 @@ const themeData = Array.from(themeCounts, ([theme, count]) => ({
 const total = d3.sum(themeData, d => d.count);
 ```
 
+<!-- Create plot for theme breakdown -->
 
 ```js
 Plot.plot({
@@ -218,6 +234,7 @@ Plot.plot({
 ```
 
 ---
+<!-- Builds a frequency table of artworks grouped by SpaceDesc -->
 
 ```js
 const spaceDescCounts = d3.rollup(
@@ -234,6 +251,8 @@ const spaceDescData = Array.from(spaceDescCounts, ([spaceDesc, count]) => ({
 const totalSpaceDesc = d3.sum(spaceDescData, d => d.count);
 ```
 
+<!-- Text for Sapce description plot info button -->
+
 <div class="viz-container">
 <button class="info-button"><i>i</i></button>
 
@@ -243,6 +262,8 @@ const totalSpaceDesc = d3.sum(spaceDescData, d => d.count);
 <p>The strong representation of public spaces likely reflects the genre's reliance on accessible, highly visible settings to amplify the capacity for critical social engagement.</p>
 </div>
 </div>
+
+<!-- Create plot for space description -->
 
 ```js
 Plot.plot({
@@ -287,6 +308,7 @@ Plot.plot({
 
 
 ---
+<!-- Builds a theme by tag co-occurence matrix for a heatmap -->
 
 ```js
 const tagField = "Visualtags";
@@ -314,6 +336,8 @@ const cellData = themes.flatMap(theme =>
 const maxCount = d3.max(cellData, d => d.count);
 ```
 
+<!-- Info text for co-occurence plot -->
+
 <div class="viz-container">
 <button class="info-button"><i>i</i></button>
 
@@ -325,11 +349,15 @@ const maxCount = d3.max(cellData, d => d.count);
 </div>
 </div>
 
+<!-- Filters the theme by tag co-occurence grid down to meaningful pairs (count >= 2) -->
+
 ```js
 const filteredCells = cellData.filter(d => d.count >= 2);
 const activeThemes = [...new Set(filteredCells.map(d => d.theme))].sort();
 const activeTags   = [...new Set(filteredCells.map(d => d.tag))].sort();
 ```
+
+<!-- Plot heat map for co-occurence -->
 
 ```js
 Plot.plot({
