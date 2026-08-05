@@ -67,11 +67,11 @@ toc: false
 }
 </style>
 
-## Visualizations 
+<h1> Visualizations </h1>
 
 <br>
 
-## World Map by Decade
+<h2> World Map by Decade </h2>
 
 ```js
 // Create plot for map by decade

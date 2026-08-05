@@ -114,6 +114,9 @@ toc: false
 
 </style>
 
+<h1> Map </h1>
+<br>
+
 <div class="map-container">
   <button class="info-button"><i>i</i></button>
 

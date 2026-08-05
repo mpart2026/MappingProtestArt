@@ -12,7 +12,7 @@ toc: false
 </style>
 <div class="content-wrapper", style="max-width: 100%; width: 90%;">
 
-<h2> About MPA </h2>
+<h1> About MPA </h1>
 
 Mapping Protest Art seeks to illuminate the global language of resistance through creative expression by allowing the viewer to access different forms of protest. The project transforms individual acts of civic dissent into a collective narrative of resilience by charting how communities worldwide have used art to challenge injustice, defend their rights, and mobilize social change.
 

@@ -4,7 +4,7 @@ const data = await FileAttachment("../data/artwork.csv").csv({ typed: true });
 
 // Create container for the collection
 const container = display(document.createElement("div"));
-container.style.maxWidth = "900px";
+container.style.maxWidth = "100%";
 container.style.margin = "0 auto";
 container.style.padding = "2rem";
 container.style.fontFamily = "system-ui, -apple-system, sans-serif";
@@ -27,6 +27,7 @@ container.appendChild(divider);
 // State variables
 let activeTheme = null;
 let sortBy = "title";
+let sortDirection = "asc";
 
 // Extract unique themes
 const themes = [...new Set(data.map(row => row.Theme).filter(Boolean))].sort();
@@ -162,7 +163,14 @@ sortOptions.forEach(option => {
   });
   
   button.addEventListener("click", () => {
-    sortBy = option.value;
+    if (sortBy === option.value) {
+      // Same sort clicked again — flip direction
+      sortDirection = sortDirection === "asc" ? "desc" : "asc";
+    } else {
+      // New sort field selected — reset to ascending
+      sortBy = option.value;
+      sortDirection = "asc";
+    }
     updateDisplay();
     updateSortStyles();
   });
@@ -208,27 +216,28 @@ function updateSortStyles() {
 
 function sortData(dataToSort) {
   const sorted = [...dataToSort];
-  
+  const dir = sortDirection === "asc" ? 1 : -1;
+
   if (sortBy === "title") {
     sorted.sort((a, b) => {
       const titleA = (a.Title || 'Untitled').toLowerCase();
       const titleB = (b.Title || 'Untitled').toLowerCase();
-      return titleA.localeCompare(titleB);
+      return dir * titleA.localeCompare(titleB);
     });
   } else if (sortBy === "creator") {
     sorted.sort((a, b) => {
       const creatorA = (a.Creator || '').toLowerCase();
       const creatorB = (b.Creator || '').toLowerCase();
-      return creatorA.localeCompare(creatorB);
+      return dir * creatorA.localeCompare(creatorB);
     });
   } else if (sortBy === "year") {
     sorted.sort((a, b) => {
       const yearA = parseInt(a['Year']) || 0;
       const yearB = parseInt(b['Year']) || 0;
-      return yearB - yearA;
+      return dir * (yearA - yearB);  // note: dir=1 gives ascending years now
     });
   }
-  
+
   return sorted;
 }
 
@@ -248,6 +257,7 @@ function updateDisplay() {
   sortedData.forEach(row => {
     // Create item container
     const item = document.createElement("div");
+    item.width = "100%";
     item.style.marginBottom = "2.5rem";
     item.style.paddingBottom = "2rem";
     item.style.borderBottom = "1px solid #ddd";
@@ -291,7 +301,7 @@ function updateDisplay() {
     
     // Description
     if (row.Description) {
-      const desc = document.createElement("p");
+      const desc = document.createElement("div");
       desc.textContent = row.Description;
       desc.style.marginTop = "0.75rem";
       desc.style.marginBottom = "0.5rem";
