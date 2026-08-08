@@ -113,15 +113,16 @@ There is no single way to explore the site. The following suggestions should hel
 * <b>Collection</b>: Explore the collection in list form, where artworks can be browsed by theme and sorted by title, creator, or year of creation.
 * <b>Visualizations</b>: View data visualizations to gain insight into patterns within the collection. Interpretive notes are available through the Info button in the upper-right corner, though visitors are encouraged to draw their own conclusions from the data.
 
-
 </br>
 <h2> Contact Us </h2>
-We invite viewers to participate and contribute items to expand the collection.</br>
+The current collection is only the beginning of this initiative. We invite viewers to participate and contribute items to expand the collection.</br>
 Do you know of protest art that you believe should be part of the collection?</br>
 Send us details about the item(s): Creator name, artwork title, country of origin, URLs with more information.</br>
 Email us at mpart2026@gmail.com <br>
+If you notice any inaccuracies or miscategorizations, please notify us.
+<br>
+<br>
 
-</br>
 <h2> About the Creator </h2>
 
 My name is L Radhakrishnan. I am a student at CUNY GC and I created Mapping Protest Art as the capstone project to fulfil the final requirement for my M.A in Digital Humanities.
