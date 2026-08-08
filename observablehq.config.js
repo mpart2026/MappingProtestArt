@@ -115,6 +115,14 @@ export default {
         background: #333;
       }
 
+      #observablehq-header nav a.active-nav {
+        color: #dc1616 !important;
+        font-weight: 700;
+      }
+      #observablehq-header nav a {
+        color: #5e5656; /* dim the non-active links */
+      }
+
       @media (max-width: 768px) {
         #back-to-top {
           width: 40px;
@@ -282,6 +290,18 @@ export default {
         });
       });
     </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const path = location.pathname.replace(/\\/+$/, '') || '/';
+
+        document.querySelectorAll('#observablehq-header nav a').forEach(link => {
+          const linkPath = new URL(link.href).pathname.replace(/\\/+$/, '') || '/';
+          if (path === linkPath) link.classList.add('active-nav');
+        });
+      });
+    </script>
+
   `,
   
   // The path to the source root.
