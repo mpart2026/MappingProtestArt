@@ -115,7 +115,7 @@ There is no single way to explore the site. The following suggestions should hel
 
 </br>
 <h2> Contact Us </h2>
-The current collection is only the beginning of this initiative. We invite viewers to participate and contribute items to expand the collection.</br>
+The current collection is only the beginning of this initiative. <br> We invite viewers to participate and contribute items to expand the collection.<br> <br>
 Do you know of protest art that you believe should be part of the collection?</br>
 Send us details about the item(s): Creator name, artwork title, country of origin, URLs with more information.</br>
 Email us at mpart2026@gmail.com <br>
@@ -125,7 +125,7 @@ If you notice any inaccuracies or miscategorizations, please notify us.
 
 <h2> About the Creator </h2>
 
-My name is L Radhakrishnan. I am a student at CUNY GC and I created Mapping Protest Art as the capstone project to fulfil the final requirement for my M.A in Digital Humanities.
+My name is Lini Radhakrishnan. As a student at the CUNY Graduate Center, I created Mapping Protest Art as the capstone project to fulfil the final requirement for my M.A in Digital Humanities.
 
 I have a background in art having completed the Masters and Doctoral program at Rugters in Art History. Hence the decision to make art the cornerstone of the project.
 
