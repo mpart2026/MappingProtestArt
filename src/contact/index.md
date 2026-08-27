@@ -118,9 +118,9 @@ There is no single way to explore the site. The following suggestions should hel
 The current collection is only the beginning of this initiative. <br> We invite viewers to participate and contribute items to expand the collection.<br> <br>
 Do you know of protest art that you believe should be part of the collection?</br>
 Send us details about the item(s): Creator name, artwork title, country of origin, URLs with more information.</br>
-Email us at mpart2026@gmail.com <br>
 If you notice any inaccuracies or miscategorizations, please notify us.
-<br>
+<br><br>
+Email us at mpart2026@gmail.com <br>
 <br>
 
 <h2> About the Creator </h2>
