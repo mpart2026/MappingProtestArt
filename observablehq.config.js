@@ -23,13 +23,17 @@ export default {
     <style>
       #observablehq-header {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         gap: 1rem;
         position: static !important;
         top: 0;
         z-index: 1000;
-        padding-bottom: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 2rem 2rem;
+        background: #000;
+        box-shadow: none !important;
+        border-bottom: none !important;
       }
       
       .observablehq {
@@ -45,29 +49,36 @@ export default {
       }
 
       #observablehq-main {
-        padding-top: 2rem;
+        padding-top: 0.5rem;
+        padding: 0;
       }
       
       .header-top {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 0.5rem 0;
+        gap: 0.75rem;
+        padding: 0;
       }
       
       .header-logo {
-        height: 70px;
-        width: 100%;
+        height: 78px;
+        width: auto;
         cursor: pointer;
+      }
+
+     .header-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+        color: #cfb6b6;
       }
       
       .header-link {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
         text-decoration: none;
         color: inherit;
-        transition: opacity 0.2s;
       }
       
       .header-link:hover {
@@ -76,11 +87,11 @@ export default {
       
       #observablehq-header nav {
         display: flex;
-        gap: 7rem;
+        gap: 2rem;
         align-items: center;
-        padding-top: 1rem;
-        width: 100%;
-        justify-content: center;
+        padding: 0;
+        width: auto;
+        justify-content: flex-end;
       }
       
       #back-to-top {
@@ -120,48 +131,29 @@ export default {
         font-weight: 700;
       }
       #observablehq-header nav a {
-        color: #5e5656; /* dim the non-active links */
+        color: #cfb6b6 !important; /* dim the non-active links */
+        font-size: 0.95rem;
       }
 
-      @media (max-width: 768px) {
-        #back-to-top {
-          width: 40px;
-          height: 40px;
-          bottom: 1rem;
-          right: 1rem;
-          font-size: 1.1rem;
-        }
+    @media (max-width: 900px) {
+      #observablehq-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
       }
-        
-      /* ─── MOBILE ONLY (≤900px) — overrides above ─── */
-      @media (max-width: 900px) {
-        .header-top {
-          flex-direction: column;
-          text-align: center;
-          gap: 0.5rem;
-        }
 
-        .header-logo {
-          height: 30px;
-          width: 100%;
-        }
-
-        #observablehq-header nav {
-          flex-wrap: wrap;
-          gap: 0.2rem;
-          padding-top: 0.5rem;
-        }
-
-        #observablehq-header nav a {
-          padding: 0.25rem 0.5rem !important;
-          font-size: 0.9rem;
-        }
-
-        .observablehq {
-          padding-left: 0.5rem !important;
-          padding-right: 0.5rem !important;
-        }
+      #observablehq-header nav {
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+        justify-content: flex-start;
+        padding-top: 0.5rem;
       }
+
+      #observablehq-header nav a {
+        padding: 0.25rem 0 !important;
+        font-size: 0.9rem;
+      }
+    }
 
       .dropdown {
         position: relative;
@@ -311,11 +303,14 @@ export default {
   sidebar: false,
   
   header: `
+
     <div class="header-top">
       <a href="/home/" class="header-link">
-         <img src="img/mpalogo.png" alt="" class="header-logo">
+        <img src="img/mpalogo.png" alt="Logo" class="header-logo">
+        <h1 class="header-title">Mapping Protest Art</h1>
       </a>
     </div>
+ 
     <nav>
       
       <a href="/home/" style="padding: 0.5rem 1rem; text-decoration: none; color: inherit;">Home</a>

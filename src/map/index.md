@@ -304,13 +304,33 @@ function updateMap() {
           ${(row.Location || row.Country) ? `<p style="margin: 0;"><strong>Location:</strong> ${[row.Location, row.Country].filter(Boolean).join(', ')}</p>` : ''}
           ${row.Description ? `<p style="margin: 0;">${row.Description}</p>` : ''}
           ${row['Visualtags'] ? `<p style="margin: 0;"><strong>Tags:</strong> ${row['Visualtags']}</p>` : ''}
-          ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" target="_blank">More Info</a></p>` : ''}
+          ${row['InfoURL'] ? `<p style="margin: 0;"><a href="${row['InfoURL']}" class="more-info-link" target="_blank">More Info</a></p>` : ''}
         </div>
       </div>
     `;
 
     const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
     marker.bindPopup(popupContent);
+
+    // Attach the external-link warning once the popup opens
+    marker.on("popupopen", () => {
+      const popupEl = marker.getPopup().getElement();
+      const moreInfoLink = popupEl?.querySelector(".more-info-link");
+      
+      if (moreInfoLink) {
+        moreInfoLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          const url = moreInfoLink.getAttribute("href");
+          const confirmed = window.confirm(
+            "You are about to leave this site and visit an external website:\n\n" + url + "\n\nDo you want to continue?"
+          );
+          if (confirmed) {
+            window.open(url, "_blank", "noopener,noreferrer");
+          }
+        });
+      }
+    });
+    
     markers.push(marker);
   });
 

@@ -354,20 +354,21 @@ function updateDisplay() {
     const title = document.createElement("h2");
     title.style.marginTop = "0";
     title.style.marginBottom = "0.5rem";
+    title.textContent = row.Title || 'Untitled';
     
-    if (row.InfoURL) {
-      const link = document.createElement("a");
-      link.href = row.InfoURL;
-      link.target = "_blank";
-      link.textContent = row.Title || 'Untitled';
-      link.style.color = "#0066cc";
-      link.style.textDecoration = "none";
-      link.addEventListener("mouseover", () => link.style.textDecoration = "underline");
-      link.addEventListener("mouseout", () => link.style.textDecoration = "none");
-      title.appendChild(link);
-    } else {
-      title.textContent = row.Title || 'Untitled';
-    }
+    // if (row.InfoURL) {
+    //   const link = document.createElement("a");
+    //   link.href = row.InfoURL;
+    //   link.target = "_blank";
+    //   link.textContent = row.Title || 'Untitled';
+    //   link.style.color = "#0066cc";
+    //   link.style.textDecoration = "none";
+    //   link.addEventListener("mouseover", () => link.style.textDecoration = "underline");
+    //   link.addEventListener("mouseout", () => link.style.textDecoration = "none");
+    //   title.appendChild(link);
+    // } else {
+    //   title.textContent = row.Title || 'Untitled';
+    // }
     
     item.appendChild(title);
     
@@ -410,6 +411,34 @@ function updateDisplay() {
       detailsDiv.style.color = "#888";
       detailsDiv.style.marginTop = "0.5rem";
       item.appendChild(detailsDiv);
+    }
+    
+  // More Info link (opens InfoURL), only shown if the field is present
+    if (row.InfoURL) {
+      const moreInfo = document.createElement("a");
+      moreInfo.href = row.InfoURL;
+      moreInfo.target = "_blank";
+      moreInfo.textContent = "More Info";
+      moreInfo.style.display = "inline-block";
+      moreInfo.style.marginTop = "0.75rem";
+      moreInfo.style.color = "#0066cc";
+      moreInfo.style.textDecoration = "none";
+      moreInfo.style.fontSize = "0.9rem";
+      moreInfo.style.fontWeight = "600";
+      moreInfo.addEventListener("mouseover", () => moreInfo.style.textDecoration = "underline");
+      moreInfo.addEventListener("mouseout", () => moreInfo.style.textDecoration = "none");
+            
+      moreInfo.addEventListener("click", (e) => {
+        e.preventDefault();
+        const confirmed = window.confirm(
+          "You are about to leave this site and visit an external website:\n\n" + row.InfoURL + "\n\nDo you want to continue?"
+        );
+        if (confirmed) {
+          window.open(row.InfoURL, "_blank", "noopener,noreferrer");
+        }
+      });
+      
+      item.appendChild(moreInfo);
     }
     
     itemsContainer.appendChild(item);
