@@ -5,7 +5,7 @@ toc: false
 
 <style>
   .content-wrapper {
-    padding-top: 6rem;
+    padding-top: 0rem;
     max-width: 900px;
     margin: 0 auto;
   }
