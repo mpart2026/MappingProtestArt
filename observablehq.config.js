@@ -129,6 +129,8 @@ export default {
 
       #observablehq-header nav a.active-nav {
         color: #dc1616 !important;
+        font-family: var(--sans-serif, inherit);
+        font-size: 1rem;
         font-weight: 700;
       }
       #observablehq-header nav a {
