@@ -68,6 +68,7 @@ export default {
 
      .header-title {
         font-size: 2rem;
+        font-family: var(--sans-serif, inherit);
         font-weight: 600;
         margin: 0;
         color: #cfb6b6;
@@ -132,7 +133,8 @@ export default {
       }
       #observablehq-header nav a {
         color: #cfb6b6 !important; /* dim the non-active links */
-        font-size: 0.95rem;
+        font-family: var(--sans-serif, inherit);
+        font-size: 1rem;
       }
 
     @media (max-width: 900px) {
