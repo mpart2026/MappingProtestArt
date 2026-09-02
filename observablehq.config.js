@@ -82,7 +82,7 @@ export default {
       }
 
       .header-logo {
-        height: 78px;
+        height: 98px;
         width: auto;
         cursor: pointer;
       }
