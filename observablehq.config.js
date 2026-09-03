@@ -210,12 +210,33 @@ export default {
       @media (max-width: 900px) {
 
         #observablehq-header {
+          position: static !important;
+          display: flex !important;
           flex-direction: column;
           align-items: flex-start;
+          widht: 100% !important;
           padding: 0.75rem 1rem;
+          min-height: 0;
+        }
+
+          #observablehq-main {
+          padding-top: 1rem;         
+          }
+
+        .header-top {
+          width: 100%;
+          }
+
+          .header-logo {
+          height: 48px;        
+          }
+
+        .header-title {
+          font-size: 1.4rem;
         }
 
         #observablehq-header nav {
+          width: 100%;
           flex-wrap: wrap;
           gap: 0.75rem 1rem;
           justify-content: flex-start;
