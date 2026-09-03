@@ -210,13 +210,25 @@ export default {
       @media (max-width: 900px) {
 
         #observablehq-header {
-          position: static !important;
-          display: flex !important;
-          flex-direction: column;
-          align-items: flex-start;
-          widht: 100% !important;
-          padding: 0.75rem 1rem;
-          min-height: 0;
+          display: flex;
+          min-height: 82px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+
+          width: auto !important;
+          max-width: none !important;
+
+          position: relative !important;  
+          z-index: 1000 !important;
+
+          top: 0;
+          padding: 2rem 1rem;
+          background: #000;
+
+          box-shadow: none !important;
+          border-bottom: none !important;
         }
 
           #observablehq-main {
